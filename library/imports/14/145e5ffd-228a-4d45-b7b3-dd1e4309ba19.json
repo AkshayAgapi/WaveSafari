@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "particle_pentagram_08",
+    "texture": "8a851c97-141d-4c23-8793-49a8a1000339",
+    "atlas": "",
+    "rect": [
+      10,
+      11,
+      181,
+      182
+    ],
+    "offset": [
+      0.5,
+      -2
+    ],
+    "originalSize": [
+      200,
+      200
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

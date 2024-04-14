@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "bubble_02",
+    "texture": "17ae027d-fef5-42c6-8e66-2e5e5100588f",
+    "atlas": "",
+    "rect": [
+      3,
+      3,
+      121,
+      122
+    ],
+    "offset": [
+      -0.5,
+      0
+    ],
+    "originalSize": [
+      128,
+      128
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

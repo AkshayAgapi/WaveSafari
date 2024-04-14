@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "em_emitlight_27",
+    "texture": "dd59340b-1640-44f2-8b93-d9cf4bdd363a",
+    "atlas": "",
+    "rect": [
+      3,
+      0,
+      505,
+      512
+    ],
+    "offset": [
+      -0.5,
+      0
+    ],
+    "originalSize": [
+      512,
+      512
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

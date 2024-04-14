@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "particle_round_19",
+    "texture": "8b702211-94e2-476b-bb30-8805bc7c6177",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      55,
+      55
+    ],
+    "offset": [
+      -0.5,
+      0.5
+    ],
+    "originalSize": [
+      58,
+      58
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

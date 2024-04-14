@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "boompoint_10",
+    "texture": "e1b1e032-4fd6-4b01-800d-220e944c412b",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      336,
+      336
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      336,
+      336
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

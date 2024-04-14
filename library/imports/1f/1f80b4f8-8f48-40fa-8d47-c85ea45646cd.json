@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "island1",
+    "texture": "7883771a-abe1-46a8-be47-a1db3ccfd849",
+    "atlas": "",
+    "rect": [
+      171,
+      462,
+      1730,
+      1112
+    ],
+    "offset": [
+      12,
+      6
+    ],
+    "originalSize": [
+      2048,
+      2048
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

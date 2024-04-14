@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "FuelCan",
+    "texture": "ce3b1beb-bfbb-4ea8-adaa-9750b4281b5e",
+    "atlas": "",
+    "rect": [
+      5,
+      12,
+      246,
+      233
+    ],
+    "offset": [
+      0,
+      -0.5
+    ],
+    "originalSize": [
+      256,
+      256
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}
