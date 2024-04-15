@@ -1,5 +1,5 @@
+import Joystick from "../../Module/Joystick/Joystick/Joystick";
 import GameConfig from "../Common/GameConfig";
-import Joystick from "../Joystick/Joystick";
 
 const { ccclass, property } = cc._decorator;
 
@@ -12,7 +12,7 @@ export default class BoatInputController extends cc.Component {
     movementSpeed: number = 230.0; // Units per second
     rotationSpeed: number = 200; // Degrees per second, adjusted for smoother transition
     public currentVelocity: cc.Vec3 = cc.Vec3.ZERO; // Tracking current velocity for inertia
-    private targetRotation: number = 0;
+    private targetRotation: number = 90;
     private decelerationFactor: number = 0.993; // Factor to decrease velocity each frame when joystick is released
     private idleTime: number = 0; // Time since last joystick input
 

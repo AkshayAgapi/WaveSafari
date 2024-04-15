@@ -48,6 +48,7 @@ bin/
 obj/
 gen/
 library/
+build/
 local/
 local.properties
 
