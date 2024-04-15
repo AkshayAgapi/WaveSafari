@@ -1,0 +1,314 @@
+{
+    "segments": [
+        {
+            "id": 1,
+            "items": [
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": 726.762,
+                        "y": 53.417
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -221.328,
+                    "anchor": {
+                        "x": 0.5352397355257796,
+                        "y": 0.4565978596738029
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": -1007.314,
+                        "y": 390.525
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": 104.32000000000002,
+                    "anchor": {
+                        "x": 0.6214069572437444,
+                        "y": 0.6583388587111447
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island2",
+                    "position": {
+                        "x": 163.402,
+                        "y": -1032.704
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -167.119,
+                    "anchor": {
+                        "x": 0.42505749281216215,
+                        "y": 0.4788038823506483
+                    },
+                    "size": {
+                        "width": 1955,
+                        "height": 1192
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 9.709,
+                        "y": 4.364
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 12.095,
+                        "y": 141.165
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 8.002,
+                        "y": 264.811
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 7.614,
+                        "y": 389.408
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "items": [
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": 936.094,
+                        "y": -552.59
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -58.88999999999998,
+                    "anchor": {
+                        "x": 0.6214069572437444,
+                        "y": 0.6583388587111447
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island2",
+                    "position": {
+                        "x": -415.42,
+                        "y": 80.895
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -92.057,
+                    "anchor": {
+                        "x": 0.42505749281216215,
+                        "y": 0.4788038823506483
+                    },
+                    "size": {
+                        "width": 1955,
+                        "height": 1192
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 238.962,
+                        "y": -952.177
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 235.495,
+                        "y": -607.203
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 260.043,
+                        "y": -765.085
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 138.602,
+                        "y": -479.874
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 1.66,
+                        "y": -348.886
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "fuelCan",
+                    "position": {
+                        "x": -125.966,
+                        "y": -189.708
+                    },
+                    "scale": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 246,
+                        "height": 233
+                    }
+                }
+            ]
+        }
+    ]
+}
