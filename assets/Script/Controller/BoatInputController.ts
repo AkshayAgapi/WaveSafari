@@ -1,5 +1,5 @@
-import GameConfig from "./Common/GameConfig";
-import Joystick from "./Joystick/Joystick";
+import GameConfig from "../Common/GameConfig";
+import Joystick from "../Joystick/Joystick";
 
 const { ccclass, property } = cc._decorator;
 

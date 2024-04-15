@@ -1,5 +1,4 @@
-import GameConfig from "./Common/GameConfig";
-
+import GameConfig from "../Common/GameConfig";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -10,21 +9,20 @@ export default class CameraController extends cc.Component {
     @property
     offsetX: number = 1000; // Adjust as needed for left and right boundaries
 
-    gameConfig: GameConfig = null;
+    private gameConfig: GameConfig = null;
+    private boundaryRect: cc.Rect = null;
 
     protected onLoad(): void {
         this.gameConfig = GameConfig.Instance();
+        this.boundaryRect = this.gameConfig.BoundaryRect;
     }
 
     update(dt: number): void {
         if (!this.target) return;
-        if (this.gameConfig == null) return;
 
         // Calculate the camera's horizontal boundaries with offsets
-        let boundaryRect = this.gameConfig.boundaryRect;
-        if(boundaryRect == null) console.log("Boundary rect is null");
-        let minX = boundaryRect.xMin + this.offsetX;
-        let maxX = boundaryRect.xMax - this.offsetX;
+        let minX = this.boundaryRect.xMin + this.offsetX;
+        let maxX = this.boundaryRect.xMax - this.offsetX;
 
         // Get the target's position in the world space
         let targetWorldPos = this.target.convertToWorldSpaceAR(cc.Vec2.ZERO);

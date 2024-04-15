@@ -1,5 +1,4 @@
-import BoatInputController from "./BoatInputController";
-
+import BoatInputController from "../Controller/BoatInputController";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
