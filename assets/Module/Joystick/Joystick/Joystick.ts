@@ -10,7 +10,7 @@ export default class Joystick extends cc.Component {
     Joystick_Ball: cc.Node = null;
 
     @property
-    Joystick_Vector: cc.Vec3 = cc.v3();
+Joystick_Vector: cc.Vec3 = cc.v3();
 
     @property
     Joystick_Max: number = 100;

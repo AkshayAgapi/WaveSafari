@@ -37,6 +37,9 @@ export default class SegmentManager extends cc.Component {
     @property(cc.Node)
     target: cc.Node = null;
 
+    @property(cc.Node)
+    segmentParent: cc.Node = null;
+
     @property
     initialSegmentsCount: number = 5;
 
@@ -74,7 +77,7 @@ export default class SegmentManager extends cc.Component {
     addSegment(yPosition: number, segmentIndex: number): void {
         const segmentInfo: SegmentData = this.segmentData.segments[segmentIndex % this.segmentData.segments.length];
         const newSegment: cc.Node = cc.instantiate(this.segmentPrefab);
-        newSegment.setParent(this.node);
+        newSegment.setParent(this.segmentParent);
         newSegment.setPosition(cc.v2(0, yPosition));
     
         segmentInfo.items.forEach((item: SegmentItem) => {

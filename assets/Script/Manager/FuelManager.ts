@@ -1,21 +1,20 @@
+import GameEvents, { GameEventNames } from "../Common/GameEvents";
+import { GenericSingleton } from "../Common/GenericSingleton";
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class FuelManager extends cc.Component {
+export default class FuelManager extends GenericSingleton<FuelManager> {
     @property
     maxFuel: number = 100;  // Maximum fuel capacity
 
-    @property
-    fuelConsumptionRate: number = 1;  // Fuel consumption rate per second
+    fuelConsumptionRate: number = 6;  // Fuel consumption rate per second
+    currentFuel: number = 100;
+    isEngineRunning: boolean = true;
 
-    currentFuel: number;
-    isEngineRunning: boolean = false;
-
-    // Event dispatcher for fuel-related events
-    private eventTarget: cc.EventTarget = new cc.EventTarget();
-
-    onLoad() {
+    override onLoad() {
         this.currentFuel = this.maxFuel;  // Start with full fuel
+        this.startEngine();
     }
 
     startEngine() {
@@ -26,22 +25,20 @@ export default class FuelManager extends cc.Component {
         this.isEngineRunning = false;
     }
 
-    update(dt: number) {
-        if (this.isEngineRunning) {
-            this.consumeFuel(dt);
-        }
-    }
-
-    consumeFuel(dt: number) {
+    consumeFuel(dt: number, joystickIntensity: number) {
+        // Reduce the fuel consumption rate based on joystick intensity (0 to 1 scale)
+        const consumptionModifier = Math.max(0.1, joystickIntensity);  // Ensure there's always some consumption
+        const fuelUsed = this.fuelConsumptionRate * consumptionModifier * dt;
+        
         if (this.currentFuel > 0) {
-            this.currentFuel -= this.fuelConsumptionRate * dt;
+            this.currentFuel -= fuelUsed;
             this.currentFuel = Math.max(this.currentFuel, 0);  // Prevent fuel from going below zero
-
+            console.log("currentfuel : "+this.currentFuel);
             if (this.currentFuel === 0) {
-                this.eventTarget.emit('fuel-depleted');
+                GameEvents.dispatchEvent(GameEventNames.FuelDepleted);
                 this.stopEngine();  // Automatically stop the engine when fuel is depleted
             } else if (this.currentFuel <= this.maxFuel * 0.1) {
-                this.eventTarget.emit('fuel-low');
+                GameEvents.dispatchEvent(GameEventNames.FuelLow);
             }
         }
     }
@@ -49,14 +46,7 @@ export default class FuelManager extends cc.Component {
     refuel(amount: number) {
         this.currentFuel += amount;
         this.currentFuel = Math.min(this.currentFuel, this.maxFuel);  // Prevent fuel from exceeding max capacity
-        this.eventTarget.emit('fuel-refueled');
-    }
-
-    on(eventName: string, callback: Function, target?: any) {
-        this.eventTarget.on(eventName, callback, target);
-    }
-
-    off(eventName: string, callback: Function, target?: any) {
-        this.eventTarget.off(eventName, callback, target);
+        GameEvents.dispatchEvent(GameEventNames.FuelRefueled);
+        this.startEngine();
     }
 }
