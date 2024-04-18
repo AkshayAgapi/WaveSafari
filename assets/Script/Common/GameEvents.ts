@@ -11,7 +11,6 @@ export default class GameEvents {
             this.listeners.set(eventName, callbacks);
         }
         callbacks.push(callback);
-        console.log(`Subscribed to ${eventName}`, callbacks);
     }
     
     static off(eventName: string, callback: Function) {
@@ -20,14 +19,12 @@ export default class GameEvents {
             const index = callbacks.indexOf(callback);
             if (index !== -1) {
                 callbacks.splice(index, 1);
-                console.log(`Unsubscribed from ${eventName}`, callback);
             }
         }
     }
     
     static dispatchEvent(eventName: string, ...args: any[]) {
         const callbacks = this.listeners.get(eventName);
-        console.log(`Dispatching ${eventName} with args`, args);
         if (callbacks) {
             callbacks.forEach(callback => {
                 callback(...args);

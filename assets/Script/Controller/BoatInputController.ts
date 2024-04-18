@@ -24,10 +24,13 @@ export default class BoatInputController extends cc.Component {
     private fuelManager: FuelManager = null;
 
     protected onLoad(): void {
-        this.fuelManager = FuelManager.Instance();
         GameEvents.on(GameEventNames.FuelLow, this.HandleOnFuelLow);
         GameEvents.on(GameEventNames.FuelDepleted, this.HandleOnFuelDepleted);
         GameEvents.on(GameEventNames.FuelRefueled, this.HandleOnFuelRefuled);
+    }
+
+    protected start(): void {
+        this.fuelManager = FuelManager.getInstance();
     }
 
     protected onDestroy(): void {

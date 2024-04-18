@@ -13,7 +13,10 @@ export default class CameraController extends cc.Component {
     private boundaryRect: cc.Rect = null;
 
     protected onLoad(): void {
-        this.gameConfig = GameConfig.Instance();
+    }
+
+    protected start(): void {
+        this.gameConfig = GameConfig.getInstance();
         this.boundaryRect = this.gameConfig.BoundaryRect;
     }
 

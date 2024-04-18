@@ -1,10 +1,10 @@
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
-import { GenericSingleton } from "../Common/GenericSingleton";
+import HUDManager from "./HudManager";
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class FuelManager extends GenericSingleton<FuelManager> {
+export default class FuelManager extends cc.Component {
     @property
     maxFuel: number = 100;  // Maximum fuel capacity
 
@@ -12,7 +12,26 @@ export default class FuelManager extends GenericSingleton<FuelManager> {
     currentFuel: number = 100;
     isEngineRunning: boolean = true;
 
+    private static instance: FuelManager;
+
+    public static getInstance(): FuelManager {
+        if (!FuelManager.instance) {
+            return FuelManager.instance;
+            
+        }
+        return FuelManager.instance;
+    }
+
     override onLoad() {
+
+        if (FuelManager.instance) {
+            console.error("Another instance of ScoreManager already exists!");
+            this.node.destroy(); // Optionally destroy the duplicate
+        } else {
+            FuelManager.instance = this;
+            cc.game.addPersistRootNode(this.node); // Make node persistent across scenes
+        }
+
         this.currentFuel = this.maxFuel;  // Start with full fuel
         this.startEngine();
     }
@@ -33,7 +52,7 @@ export default class FuelManager extends GenericSingleton<FuelManager> {
         if (this.currentFuel > 0) {
             this.currentFuel -= fuelUsed;
             this.currentFuel = Math.max(this.currentFuel, 0);  // Prevent fuel from going below zero
-            console.log("currentfuel : "+this.currentFuel);
+            HUDManager.getInstance().setFuel(this.currentFuel);
             if (this.currentFuel === 0) {
                 GameEvents.dispatchEvent(GameEventNames.FuelDepleted);
                 this.stopEngine();  // Automatically stop the engine when fuel is depleted
@@ -46,6 +65,7 @@ export default class FuelManager extends GenericSingleton<FuelManager> {
     refuel(amount: number) {
         this.currentFuel += amount;
         this.currentFuel = Math.min(this.currentFuel, this.maxFuel);  // Prevent fuel from exceeding max capacity
+        HUDManager.getInstance().setFuel(this.currentFuel);
         GameEvents.dispatchEvent(GameEventNames.FuelRefueled);
         this.startEngine();
     }

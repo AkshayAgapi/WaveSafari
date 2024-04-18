@@ -309,6 +309,171 @@
                     }
                 }
             ]
+        },
+        {
+            "id": 2,
+            "items": [
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": 870.31,
+                        "y": 332.996
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -67,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": 782.333,
+                        "y": -861.709
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": 88.96800000000002,
+                    "anchor": {
+                        "x": 0.6214069572437444,
+                        "y": 0.6583388587111447
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island2",
+                    "position": {
+                        "x": -546.993,
+                        "y": -709.043
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -263.975,
+                    "anchor": {
+                        "x": 0.42505749281216215,
+                        "y": 0.4788038823506483
+                    },
+                    "size": {
+                        "width": 1955,
+                        "height": 1192
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 231.739,
+                        "y": -907.922
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 241.457,
+                        "y": -624.783
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 242.463,
+                        "y": -765.085
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 212.361,
+                        "y": -479.874
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "finishLine",
+                    "position": {
+                        "x": 204.56,
+                        "y": -285.891
+                    },
+                    "scale": {
+                        "x": 0.7,
+                        "y": 0.7
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 1030,
+                        "height": 65
+                    }
+                }
+            ]
         }
     ]
 }

@@ -34,6 +34,9 @@ export default class SegmentManager extends cc.Component {
     @property(cc.Prefab)
     fuelCanPrefab: cc.Prefab = null;
 
+    @property(cc.Prefab)
+    finishLinePrefab: cc.Prefab = null;
+
     @property(cc.Node)
     target: cc.Node = null;
 
@@ -62,6 +65,7 @@ export default class SegmentManager extends cc.Component {
             }
 
             this.segmentData = data.json;
+            console.log("Segment Data : "+this.segmentData.segments.length);
             this.createInitialSegments();
         });
     }
@@ -124,6 +128,21 @@ export default class SegmentManager extends cc.Component {
     
         this.currentSegments.push(newSegment);
     }
+
+    resetSegments(): void {
+        this.currentSegments.forEach(segment => segment.destroy());
+        this.currentSegments = [];
+        let startPosY: number = 0;
+        for (let i = 0; i < this.initialSegmentsCount; i++) {
+            this.addSegment(startPosY, i);
+            startPosY += this.segmentHeight;
+        }
+    }
+
+    resetBoatPosition(): void {
+        // Assuming 'target' is your boat and you have a specific start position
+        this.target.setPosition(0, 0); // Set to the desired start position
+    }
     
 
     getPrefabForItemType(type: string): cc.Prefab {
@@ -138,6 +157,8 @@ export default class SegmentManager extends cc.Component {
                 return this.gemPrefab;
             case 'fuelCan':
                 return this.fuelCanPrefab;
+            case 'finishLine':
+                return this.finishLinePrefab;
             default:
                 return null;
         }

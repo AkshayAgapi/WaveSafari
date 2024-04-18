@@ -28,6 +28,8 @@ export default class SegmentToJsonTool extends cc.Component {
                 type = "island2";
             } else if (child.name.indexOf("FuelCan") === 0) {
                 type = "fuelCan";
+            } else if (child.name.indexOf("FinishLine") === 0) {
+                type = "finishLine";
             }
 
             // Add item to segment data with position, scale, and rotation

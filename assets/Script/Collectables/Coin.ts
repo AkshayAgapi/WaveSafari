@@ -8,7 +8,7 @@ class Coin extends Collectable {
     value: number = 10;
 
     collect(): void {
-        ScoreManager.Instance().addScore(this.value);
+        ScoreManager.getInstance().addScore(this.value);
         this.node.destroy();
     }
 }

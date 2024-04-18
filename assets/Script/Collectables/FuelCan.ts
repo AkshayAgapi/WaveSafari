@@ -7,7 +7,7 @@ class FuelCan extends Collectable {
     
 
     collect(): void {
-        FuelManager.Instance().refuel(100);
+        FuelManager.getInstance().refuel(100);
         this.node.destroy();
     }
 }
