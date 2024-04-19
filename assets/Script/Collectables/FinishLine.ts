@@ -1,5 +1,5 @@
 import PopupManager from "../Manager/PopupManager";
-import { ResultState } from "../Popup/ResultPopup";
+import { ResultState } from "../UI/ResultPopup";
 import { Collectable } from "./Collectable";
 const {ccclass} = cc._decorator;
 

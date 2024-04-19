@@ -36,9 +36,10 @@ export default class GameEvents {
 
 // Event Names as constants
 export const GameEventNames = {
-    GameStateChange: 'GameStateChange',
+    GameRestarted: 'GameRestarted',
+    GameEnd: 'GameEnd',
+    GameTutorialDone: 'GameTutorialDone',
     FuelDepleted: 'FuelDepleted',
     FuelLow: 'FuelLow',
     FuelRefueled: 'FuelRefueled',
-    SimpleEvent: 'SimpleEvent'
 };

@@ -26,29 +26,28 @@ export default class HUDManager extends cc.Component{
     onLoad() {
 
         if (HUDManager.instance) {
-            console.error("Another instance of ScoreManager already exists!");
-            this.node.destroy(); // Optionally destroy the duplicate
+            this.node.destroy();
         } else {
             HUDManager.instance = this;
-            cc.game.addPersistRootNode(this.node); // Make node persistent across scenes
+            //cc.game.addPersistRootNode(this.node); 
         }
 
-        this.setDamage(0);  // No damage initially
-        this.setFuel(100);  // Full fuel initially
-        this.setCoins(0);   // No coins initially
+        this.setDamage(0);
+        this.setFuel(100);
+        this.setCoins(0);
     }
 
     // Update damage level on the damage indicator sprite
     setDamage(damage: number) {
         if (this.damageIndicator) {
-            this.damageIndicator.fillRange = 1 - damage / 100;  // Assuming damage is a percentage
+            this.damageIndicator.fillRange = 1 - damage / 100; 
         }
     }
 
     // Update fuel level on the fuel indicator sprite
     setFuel(fuel: number) {
         if (this.fuelIndicator) {
-            this.fuelIndicator.fillRange = fuel / 100;  // Assuming fuel is a percentage
+            this.fuelIndicator.fillRange = fuel / 100; 
         }
     }
 

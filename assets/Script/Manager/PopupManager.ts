@@ -1,4 +1,4 @@
-import ResultPopup, { ResultState } from "../Popup/ResultPopup";
+import ResultPopup, { ResultState } from "../UI/ResultPopup";
 import { PopupBase } from "./PopupBase";
 
 const { ccclass, property } = cc._decorator;

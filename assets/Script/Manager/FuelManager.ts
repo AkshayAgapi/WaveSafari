@@ -1,4 +1,6 @@
+import { GameConst } from "../Common/GameConstant";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
+import PlayerData from "../Data/PlayerData";
 import HUDManager from "./HudManager";
 
 const { ccclass, property } = cc._decorator;
@@ -8,7 +10,7 @@ export default class FuelManager extends cc.Component {
     @property
     maxFuel: number = 100;  // Maximum fuel capacity
 
-    fuelConsumptionRate: number = 6;  // Fuel consumption rate per second
+    fuelConsumptionRate: number = 0;  // Fuel consumption rate per second
     currentFuel: number = 100;
     isEngineRunning: boolean = true;
 
@@ -34,6 +36,11 @@ export default class FuelManager extends cc.Component {
 
         this.currentFuel = this.maxFuel;  // Start with full fuel
         this.startEngine();
+    }
+
+    protected start(): void {
+        var currentBoatSetting = PlayerData.getCurrentBoatSetting();
+        this.fuelConsumptionRate = GameConst.FUEL_CONSUMPTION_RATE * currentBoatSetting.fuelConsumption;
     }
 
     startEngine() {

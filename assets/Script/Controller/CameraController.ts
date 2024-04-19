@@ -1,4 +1,4 @@
-import GameConfig from "../Common/GameConfig";
+import { GameConst } from "../Common/GameConstant";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -9,15 +9,13 @@ export default class CameraController extends cc.Component {
     @property
     offsetX: number = 1000; // Adjust as needed for left and right boundaries
 
-    private gameConfig: GameConfig = null;
     private boundaryRect: cc.Rect = null;
 
     protected onLoad(): void {
     }
 
     protected start(): void {
-        this.gameConfig = GameConfig.getInstance();
-        this.boundaryRect = this.gameConfig.BoundaryRect;
+        this.boundaryRect = GameConst.BOUNDARY_RECT;
     }
 
     update(dt: number): void {

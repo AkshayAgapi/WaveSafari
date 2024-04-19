@@ -1,5 +1,8 @@
 import Joystick from "../../Module/Joystick/Joystick/Joystick";
+import { GameConst } from "../Common/GameConstant";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
+import { BoatUpgrade } from "../Data/BoatUpgradeData";
+import PlayerData from "../Data/PlayerData";
 import FuelManager from "../Manager/FuelManager";
 
 const { ccclass, property } = cc._decorator;
@@ -10,7 +13,7 @@ export default class BoatInputController extends cc.Component {
     @property(Joystick)
     joystick: Joystick = null;
 
-    movementSpeed: number = 230.0; // Units per second
+    movementSpeed: number = 0; // Units per second
     rotationSpeed: number = 200; // Degrees per second, adjusted for smoother transition
     public currentVelocity: cc.Vec3 = cc.Vec3.ZERO; // Tracking current velocity for inertia
     private targetRotation: number = 90;
@@ -22,6 +25,7 @@ export default class BoatInputController extends cc.Component {
     private rippleFrequency: number = 1; // Frequency of the ripple effect
 
     private fuelManager: FuelManager = null;
+    private currentBoatSetting: BoatUpgrade;
 
     protected onLoad(): void {
         GameEvents.on(GameEventNames.FuelLow, this.HandleOnFuelLow);
@@ -31,6 +35,8 @@ export default class BoatInputController extends cc.Component {
 
     protected start(): void {
         this.fuelManager = FuelManager.getInstance();
+        this.currentBoatSetting = PlayerData.getCurrentBoatSetting();
+        this.movementSpeed = GameConst.MOVEMENT_SPEED * this.currentBoatSetting.speedMultiplier;
     }
 
     protected onDestroy(): void {

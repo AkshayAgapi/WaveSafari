@@ -1,7 +1,6 @@
 import { Collectable } from "../Collectables/Collectable";
 import BoatInputController from "../Controller/BoatInputController";
 import PopupManager from "../Manager/PopupManager";
-import { ResultState } from "../Popup/ResultPopup";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -45,11 +44,12 @@ export default class Boat extends cc.Component {
     }
 
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
+        console.log("collision : "+other.name);
         let collectable = other.getComponent(Collectable);
         if (collectable) {
             collectable.collect();
         }
-        PopupManager.getInstance().showResultPopup(ResultState.FirstSafariDone);
+        PopupManager.getInstance().showMainPopup();
     }
 
     onCollisionExit(event: cc.Event.EventCustom) {
