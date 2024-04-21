@@ -1,6 +1,10 @@
 import { Collectable } from "../Collectables/Collectable";
+import { ObstacleCollider, ObstacleColliderType } from "../Collectables/ObstacleCollider";
+import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import BoatInputController from "../Controller/BoatInputController";
+import DamageController from "../Controller/DamageController";
 import PopupManager from "../Manager/PopupManager";
+import { ResultState } from "../UI/ResultPopup";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -46,10 +50,23 @@ export default class Boat extends cc.Component {
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         console.log("collision : "+other.name);
         let collectable = other.getComponent(Collectable);
+
         if (collectable) {
             collectable.collect();
+        }else {
+            let obstacleCollider = other.getComponent(ObstacleCollider);
+            if(obstacleCollider){
+                switch(obstacleCollider.GetObstacleColliderType()){
+                    case ObstacleColliderType.FinsihLine:
+                        PopupManager.getInstance().showResultPopup(ResultState.FirstSafariDone);
+                        break;
+                    case ObstacleColliderType.Island:
+                        this.getComponent(DamageController)?.applyDamage();
+                        break;
+                }
+                GameEvents.dispatchEvent(GameEventNames.OnCollisionWithObstacles, obstacleCollider.GetObstacleColliderType());
+            }
         }
-        PopupManager.getInstance().showMainPopup();
     }
 
     onCollisionExit(event: cc.Event.EventCustom) {

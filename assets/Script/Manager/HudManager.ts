@@ -11,6 +11,8 @@ export default class HUDManager extends cc.Component{
     @property(cc.Label)
     coinLabel: cc.Label = null;
 
+    @property(cc.Node)
+    hudElementParent: cc.Node = null;
 
     private static instance: HUDManager;
 
@@ -40,7 +42,7 @@ export default class HUDManager extends cc.Component{
     // Update damage level on the damage indicator sprite
     setDamage(damage: number) {
         if (this.damageIndicator) {
-            this.damageIndicator.fillRange = 1 - damage / 100; 
+            this.damageIndicator.fillRange = damage / 100; 
         }
     }
 
@@ -56,5 +58,17 @@ export default class HUDManager extends cc.Component{
         if (this.coinLabel) {
             this.coinLabel.string = coinCount.toString();
         }
+    }
+
+    public hideHudElements()
+    {
+        console.log("hideHudElements")
+        this.hudElementParent.active = false;
+    }
+
+    public showHudElements()
+    {
+        console.log("showHudElements")
+        this.hudElementParent.active = true;
     }
 }

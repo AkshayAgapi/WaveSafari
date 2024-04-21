@@ -22,7 +22,7 @@
       }
     ],
     "_active": true,
-    "_level": 2,
+    "_level": 1,
     "_components": [
       {
         "__id__": 6
@@ -176,7 +176,7 @@
       "__id__": 2
     },
     "_enabled": true,
-    "speed": 0.1,
+    "speed": 0.3,
     "_id": ""
   },
   {

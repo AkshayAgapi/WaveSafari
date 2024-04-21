@@ -11,6 +11,9 @@ export default class PopupManager extends cc.Component {
     @property(ResultPopup)
     resultPopup: ResultPopup = null;
 
+    @property(PopupBase)
+    initialStartPopup: PopupBase = null;
+
     private static instance: PopupManager;
 
     public static getInstance(): PopupManager {
@@ -39,11 +42,19 @@ export default class PopupManager extends cc.Component {
         this.resultPopup.OnShow();
     }
 
+    public showStartPopup(): void {
+        this.initialStartPopup.OnShow();
+    }
+
     public hideMainPopup(): void {
         this.mainPopup.OnHide();
     }
 
     public hideResultPopup(): void {
         this.resultPopup.OnHide();
+    }
+
+    public hideStartPopup(): void {
+        this.initialStartPopup.OnHide();
     }
 }

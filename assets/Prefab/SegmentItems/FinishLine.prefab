@@ -136,6 +136,7 @@
       "__id__": 1
     },
     "_enabled": true,
+    "obstacleColliderType": 1,
     "_id": ""
   },
   {

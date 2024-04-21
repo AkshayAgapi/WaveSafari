@@ -10,10 +10,12 @@ export default class Joystick extends cc.Component {
     Joystick_Ball: cc.Node = null;
 
     @property
-Joystick_Vector: cc.Vec3 = cc.v3();
+    Joystick_Vector: cc.Vec3 = cc.v3();
 
     @property
     Joystick_Max: number = 100;
+
+    private isOn : boolean = false;
 
     onLoad() {
         this.node.on(cc.Node.EventType.TOUCH_START, this.Joystick_Touch_Start, this);
@@ -27,7 +29,21 @@ Joystick_Vector: cc.Vec3 = cc.v3();
         this.JoystickNode.active = false;
     }
 
+    public IsOn() : boolean {
+        return this.isOn;
+    }
+
+    public TurnOn() {
+        this.isOn = true;
+    }
+
+    public  TurnOff(){
+        this.isOn = false;
+    }
+
     private Joystick_Touch_Start(event: cc.Event.EventTouch): void {
+        if(!this.isOn) return;
+
         let touch_pos = event.getLocation();
         let world_pos = this.node.convertToNodeSpaceAR(touch_pos);
     
@@ -37,6 +53,8 @@ Joystick_Vector: cc.Vec3 = cc.v3();
     }
 
     private Joystick_Touch_Move(event: cc.Event.EventTouch): void {
+        if(!this.isOn) return;
+
         let touch = event.getTouches()[0];
         let touch_pos = touch.getLocation();
         // Convert the touch position to the JoystickNode's local space
@@ -59,10 +77,13 @@ Joystick_Vector: cc.Vec3 = cc.v3();
     }
 
     private Set_Joystick_Ball_Position(pos: cc.Vec3): void {
+        if(!this.isOn) return;
         this.Joystick_Ball.setPosition(pos);
     }
 
     private Limit_joystick_Vector(joystick_vector: cc.Vec3): cc.Vec3 {
+        if(!this.isOn) return new cc.Vec3(0,0,0);
+
         let input_mag = joystick_vector.mag();
         if (input_mag > this.Joystick_Max) {
             // Create a new limited vector without modifying the original joystick_vector

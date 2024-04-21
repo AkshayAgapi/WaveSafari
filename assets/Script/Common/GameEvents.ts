@@ -38,7 +38,10 @@ export default class GameEvents {
 export const GameEventNames = {
     GameRestarted: 'GameRestarted',
     GameEnd: 'GameEnd',
-    GameTutorialDone: 'GameTutorialDone',
+    GameCinematicTutorialStart: 'GameCinematicTutorialStart',
+    GameCinematicTutorialDone: 'GameCinematicTutorialDone',
+    GameSplashZoomStart: 'GameSplashZoomStart',
+    OnCollisionWithObstacles: 'OnCollisionWithObstacles',
     FuelDepleted: 'FuelDepleted',
     FuelLow: 'FuelLow',
     FuelRefueled: 'FuelRefueled',

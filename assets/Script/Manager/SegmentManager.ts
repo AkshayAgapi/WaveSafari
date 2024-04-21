@@ -1,3 +1,5 @@
+import PlayerData from "../Data/PlayerData";
+
 const {ccclass, property} = cc._decorator;
 
 interface SegmentItem {
@@ -58,7 +60,17 @@ export default class SegmentManager extends cc.Component {
     }
 
     loadSegmentData() {
-        cc.loader.loadRes("Data/SegmentData", cc.JsonAsset, (err, data: cc.JsonAsset) => {
+
+        var jsonPath = "";
+        if(PlayerData.isFirstTime() == 1){
+            jsonPath = "Data/FirstTimeSegmentData";
+            console.log("PlayerData.isFirstTime()");
+        }else{
+            jsonPath = "Data/SegmentData";
+            console.log("PlayerData.isFirstTime() false");
+        }
+
+        cc.loader.loadRes(jsonPath, cc.JsonAsset, (err, data: cc.JsonAsset) => {
             if (err) {
                 cc.error(err);
                 return;
@@ -133,10 +145,7 @@ export default class SegmentManager extends cc.Component {
         this.currentSegments.forEach(segment => segment.destroy());
         this.currentSegments = [];
         let startPosY: number = 0;
-        for (let i = 0; i < this.initialSegmentsCount; i++) {
-            this.addSegment(startPosY, i);
-            startPosY += this.segmentHeight;
-        }
+        this.loadSegmentData();
     }
 
     resetBoatPosition(): void {

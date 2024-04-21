@@ -1,0 +1,419 @@
+{
+    "segments": [
+        {
+            "id": 1,
+            "items": [
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": 905.703,
+                        "y": -51.159
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -221.328,
+                    "anchor": {
+                        "x": 0.5352397355257796,
+                        "y": 0.4565978596738029
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": -1042.896,
+                        "y": 52.783
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": 104.32000000000002,
+                    "anchor": {
+                        "x": 0.5269464526501494,
+                        "y": 0.5419618058556563
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island2",
+                    "position": {
+                        "x": 113.147,
+                        "y": -934.699
+                    },
+                    "scale": {
+                        "x": 0.55,
+                        "y": 0.55
+                    },
+                    "rotation": 180,
+                    "anchor": {
+                        "x": 0.4993584414998409,
+                        "y": 0.49170585257768357
+                    },
+                    "size": {
+                        "width": 1955,
+                        "height": 1192
+                    }
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "items": [
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": 877.65,
+                        "y": -460.957
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -80.88999999999999,
+                    "anchor": {
+                        "x": 0.5311808280037477,
+                        "y": 0.5074493589852368
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island2",
+                    "position": {
+                        "x": -514.003,
+                        "y": -556.879
+                    },
+                    "scale": {
+                        "x": 0.55,
+                        "y": 0.55
+                    },
+                    "rotation": -92.057,
+                    "anchor": {
+                        "x": 0.42505749281216215,
+                        "y": 0.4788038823506483
+                    },
+                    "size": {
+                        "width": 1955,
+                        "height": 1192
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 67.223,
+                        "y": -133.648
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 99.869,
+                        "y": 212.147
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 95.566,
+                        "y": 53.444
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 95.724,
+                        "y": 349.289
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 95.577,
+                        "y": 490.691
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "fuelCan",
+                    "position": {
+                        "x": 80.986,
+                        "y": 715.722
+                    },
+                    "scale": {
+                        "x": 0.3,
+                        "y": 0.3
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 246,
+                        "height": 233
+                    }
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "items": [
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": 819.579,
+                        "y": 311.462
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -67,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": -723.666,
+                        "y": 357.516
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -67,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island1",
+                    "position": {
+                        "x": -651.334,
+                        "y": -1257.135
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": 103.96800000000002,
+                    "anchor": {
+                        "x": 0.5024012129640562,
+                        "y": 0.5010857031601441
+                    },
+                    "size": {
+                        "width": 1730,
+                        "height": 1112
+                    }
+                },
+                {
+                    "type": "island2",
+                    "position": {
+                        "x": 1270.634,
+                        "y": -1071.962
+                    },
+                    "scale": {
+                        "x": 1,
+                        "y": 1
+                    },
+                    "rotation": -2,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 1955,
+                        "height": 1192
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 118.555,
+                        "y": -292.067
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 121.615,
+                        "y": -22.244
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 119.292,
+                        "y": -152.559
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 122.479,
+                        "y": 109.349
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "finishLine",
+                    "position": {
+                        "x": 84.884,
+                        "y": 299.192
+                    },
+                    "scale": {
+                        "x": 0.7,
+                        "y": 0.7
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 1030,
+                        "height": 65
+                    }
+                }
+            ]
+        }
+    ]
+}

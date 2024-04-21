@@ -14,7 +14,26 @@ export default class FuelController extends cc.Component {
     currentFuel: number = 100;
     isEngineRunning: boolean = true;
 
+    private static instance: FuelController;
+
+    public static getInstance(): FuelController {
+        if (!FuelController.instance) {
+            return FuelController.instance;
+            
+        }
+        return FuelController.instance;
+    }
+
     override onLoad() {
+
+        if (FuelController.instance) {
+            console.error("Another instance of ScoreManager already exists!");
+            this.node.destroy(); // Optionally destroy the duplicate
+        } else {
+            FuelController.instance = this;
+            cc.game.addPersistRootNode(this.node); // Make node persistent across scenes
+        }
+
         this.currentFuel = this.maxFuel;  // Start with full fuel
         this.startEngine();
     }

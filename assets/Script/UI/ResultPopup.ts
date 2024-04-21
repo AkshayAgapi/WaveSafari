@@ -1,5 +1,7 @@
 import { PopupBase } from "../Manager/PopupBase";
+import PopupManager from "../Manager/PopupManager";
 import ScoreManager from "../Manager/ScoreManager";
+import SegmentManager from "../Manager/SegmentManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -23,6 +25,9 @@ export default class ResultPopup extends PopupBase {
 
     @property(cc.Button)
     continueButton: cc.Button = null;
+
+    @property(SegmentManager)
+    sg: SegmentManager = null;
 
     private currentState: ResultState;
 
@@ -61,6 +66,9 @@ export default class ResultPopup extends PopupBase {
     }
 
     onContinueButtonClicked(): void {
+        this.sg.resetSegments();
+        this.sg.resetBoatPosition();
+        PopupManager.getInstance().showMainPopup();
         this.OnHide();
     }
 

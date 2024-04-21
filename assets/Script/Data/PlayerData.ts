@@ -7,7 +7,7 @@ export default class PlayerData extends cc.Component {
     private static readonly COINS_KEY = "totalCoins";
     private static readonly BOAT_SETTING_ID = "boatSetting";
     private static readonly BOAT_UPGRADES_KEY = "boatUpgrades";
-    private static readonly IS_FIRST_TIME = "isFIrstTime";
+    private static readonly IS_FIRST_TIME = "isFirstTime";
 
 
     // Get the total coins collected from storage
@@ -55,5 +55,14 @@ export default class PlayerData extends cc.Component {
             upgrade.unlocked = true;
             PlayerData.saveBoatUpgrades(upgrades);
         }
+    }
+
+    static isFirstTime() : number {
+        const isFirstTime = localStorage.getItem(PlayerData.IS_FIRST_TIME);
+        return isFirstTime ? parseInt(isFirstTime, 10) : 1;
+    }
+
+    static firstTimeDone(): void {
+        localStorage.setItem(PlayerData.IS_FIRST_TIME, "0");
     }
 }

@@ -1,5 +1,6 @@
 import { BoatUpgrade } from "../Data/BoatUpgradeData";
 import PlayerData from "../Data/PlayerData";
+import GameManager from "../Manager/GameManager";
 import { PopupBase } from "../Manager/PopupBase";
 import BoatSettingCard from "./BoatSettingCard";
 
@@ -44,6 +45,7 @@ export default class MainPopup extends PopupBase {
     }
 
     onPlayButtonClicked(): void {
+        GameManager.getInstance().restartGame();
         this.OnHide();
     }
 

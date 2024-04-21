@@ -1,31 +1,165 @@
-// Learn TypeScript:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/typescript.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
+import Joystick from "../../Module/Joystick/Joystick/Joystick";
+import GameEvents, { GameEventNames } from "../Common/GameEvents";
+import PlayerData from "../Data/PlayerData";
+import FuelController from "./FuelController";
+import HUDManager from "./HudManager";
+import PopupManager from "./PopupManager";
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class GameManager extends cc.Component {
 
-    @property(cc.Label)
-    label: cc.Label = null;
+    @property(cc.Node)
+    boat: cc.Node = null;
 
-    @property
-    text: string = 'hello';
+    @property(cc.Node)
+    splashScreen: cc.Node = null;
 
-    // LIFE-CYCLE CALLBACKS:
+    @property(Joystick)
+    joyStick: Joystick = null;
 
-    // onLoad () {}
+    public fuelController : FuelController = null;
 
-    start () {
+    private isGamePaused: boolean = false;
+    private static instance: GameManager;
 
+    public static getInstance(): GameManager {
+        return GameManager.instance;
     }
 
-    // update (dt) {}
+    onLoad() {
+
+        if (GameManager.instance) {
+            this.node.destroy();
+        } else {
+            GameManager.instance = this;
+        }
+
+        this.initGame();
+        GameEvents.on(GameEventNames.GameEnd, this.HandleOnGameEnd);
+        GameEvents.on(GameEventNames.GameRestarted, this.HandleOnGameRestarted);
+        GameEvents.on(GameEventNames.GameCinematicTutorialDone, this.HandleOnGameTutorialDone);
+    }
+
+    protected start(): void {
+        this.joyStick.TurnOff();
+        HUDManager.getInstance().hideHudElements();
+        this.fuelController = this.boat.getComponent(FuelController);
+    }
+
+    protected onDestroy(): void {
+        GameEvents.off(GameEventNames.GameEnd, this.HandleOnGameEnd);
+        GameEvents.off(GameEventNames.GameRestarted, this.HandleOnGameRestarted);
+        GameEvents.off(GameEventNames.GameCinematicTutorialDone, this.HandleOnGameTutorialDone);
+    }
+
+    private HandleOnGameEnd = () => {
+        this.joyStick.TurnOff();
+        HUDManager.getInstance().hideHudElements();
+    };
+
+    private HandleOnGameRestarted = () => {
+        this.joyStick.TurnOn();
+        HUDManager.getInstance().showHudElements();
+
+        if(this.fuelController != null){
+            this.fuelController.refuel(100);
+        }
+    };
+
+    private HandleOnGameTutorialDone = () => {
+        GameEvents.dispatchEvent(GameEventNames.GameRestarted);
+    };
+
+    initGame() {
+        this.checkFirstTimeUser();
+    }
+
+
+    onSplashScreenEnd() {
+        //this.fadeOutSplashScreen();
+        //this.checkFirstTimeUser();
+    }
+
+    checkFirstTimeUser() {
+        const isFirstTime = PlayerData.isFirstTime();
+        if (true) {
+                //disable the joystick input
+            GameEvents.dispatchEvent(GameEventNames.GameSplashZoomStart);
+        
+            this.scheduleOnce(() => {
+                this.fadeInSplashNode();
+            }, 3);
+
+            this.scheduleOnce(() => {
+                this.fadeOutSplashNode();
+            }, 6);
+
+            this.scheduleOnce(() => {
+                console.log("Dispatch GameCinematicTutorialStart");
+                //GameEvents.dispatchEvent(GameEventNames.GameCinematicTutorialStart);
+                PopupManager.getInstance().showStartPopup();
+            }, 7); 
+        } else {
+            this.startGame();
+        }
+    }
+
+    startGame() {
+        // Transition to the main game scene or whatever needs to be done next
+    }
+
+    // Optional: Handling first-time user setup
+    handleFirstTimeUser() {
+        // Placeholder for any setup like tutorials or initial configurations
+        console.log("Handle first-time user setup");
+        // Once setup is complete, possibly go to the main game or a tutorial scene
+        cc.director.loadScene("TutorialScene");
+    }
+
+    public restartGame(){
+        GameEvents.dispatchEvent(GameEventNames.GameRestarted);
+    }
+
+    public pauseGame(): void {
+        if (!this.isGamePaused) {
+            cc.director.pause();
+            this.isGamePaused = true;
+            console.log("Game paused.");
+        }
+    }
+
+    public resumeGame(): void {
+        if (this.isGamePaused) {
+            cc.director.resume();
+            this.isGamePaused = false;
+            console.log("Game resumed.");
+        }
+    }
+
+    public fadeInSplashNode(): void {
+        // Ensure the node is active and fully transparent before fading in
+        this.splashScreen.active = true;
+        this.splashScreen.opacity = 0;
+
+        cc.tween(this.splashScreen)
+            .to(2, { opacity: 255 })
+            .call(() => {
+                console.log("Fade in completed.");
+                // Additional actions after fade in
+            })
+            .start();
+    }
+
+    private fadeOutSplashNode(): void {
+        cc.tween(this.splashScreen)
+            .to(0.5, { opacity: 0 })
+            .call(() => {
+                console.log("Fade out completed.");
+                // Additional actions after fade out, like deactivating the node
+                this.splashScreen.active = false;
+            })
+            .start();
+    }
 }

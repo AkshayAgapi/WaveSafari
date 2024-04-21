@@ -3,7 +3,7 @@ import { GameConst } from "../Common/GameConstant";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import { BoatUpgrade } from "../Data/BoatUpgradeData";
 import PlayerData from "../Data/PlayerData";
-import FuelManager from "../Manager/FuelManager";
+import FuelController from "../Manager/FuelController";
 
 const { ccclass, property } = cc._decorator;
 
@@ -15,6 +15,7 @@ export default class BoatInputController extends cc.Component {
 
     movementSpeed: number = 0; // Units per second
     rotationSpeed: number = 200; // Degrees per second, adjusted for smoother transition
+    
     public currentVelocity: cc.Vec3 = cc.Vec3.ZERO; // Tracking current velocity for inertia
     private targetRotation: number = 90;
     private decelerationFactor: number = 0.993; // Factor to decrease velocity each frame when joystick is released
@@ -24,17 +25,22 @@ export default class BoatInputController extends cc.Component {
     private rippleMagnitude: number = 0.05; // Magnitude of the ripple effect
     private rippleFrequency: number = 1; // Frequency of the ripple effect
 
-    private fuelManager: FuelManager = null;
+    private fuelController: FuelController = null;
     private currentBoatSetting: BoatUpgrade;
+
+    private autoMoveDuration: number = 5; // Duration for automatic movement
+    private autoMoveTimer: number = 0; // Timer to track the automatic movement
+    private isAutoMoving: boolean = false; // Flag to control automatic movement
 
     protected onLoad(): void {
         GameEvents.on(GameEventNames.FuelLow, this.HandleOnFuelLow);
         GameEvents.on(GameEventNames.FuelDepleted, this.HandleOnFuelDepleted);
         GameEvents.on(GameEventNames.FuelRefueled, this.HandleOnFuelRefuled);
+        GameEvents.on(GameEventNames.GameCinematicTutorialStart, this.HandleOnCinematicTutorialStart);
     }
 
     protected start(): void {
-        this.fuelManager = FuelManager.getInstance();
+        this.fuelController = this.node.getComponent(FuelController);
         this.currentBoatSetting = PlayerData.getCurrentBoatSetting();
         this.movementSpeed = GameConst.MOVEMENT_SPEED * this.currentBoatSetting.speedMultiplier;
     }
@@ -43,20 +49,34 @@ export default class BoatInputController extends cc.Component {
         GameEvents.off(GameEventNames.FuelLow, this.HandleOnFuelLow);
         GameEvents.off(GameEventNames.FuelDepleted, this.HandleOnFuelDepleted);
         GameEvents.off(GameEventNames.FuelRefueled, this.HandleOnFuelRefuled);
+        GameEvents.off(GameEventNames.GameCinematicTutorialStart, this.HandleOnCinematicTutorialStart);
     }
     
     update(dt: number): void {
-        if (this.joystick && this.joystick.Joystick_Vector.mag() > 0 && this.fuelManager.isEngineRunning) {
-            let joystickIntensity = this.joystick.Joystick_Vector.mag() / this.joystick.Joystick_Max;
-            this.currentVelocity = this.joystick.Joystick_Vector.normalize().mul(this.movementSpeed);
-            this.idleTime = 0; // Reset idle time
-            this.isIdle = false;
-            this.fuelManager.consumeFuel(dt, joystickIntensity);
-        } else {
-            this.currentVelocity.mulSelf(this.decelerationFactor);
-            this.idleTime += dt;
-            if (this.idleTime > 2) { // Wait for 2 second of inactivity to consider the boat idle
-                this.isIdle = true;
+
+        if (this.isAutoMoving) {
+            if (this.autoMoveTimer < this.autoMoveDuration) {
+                this.autoMoveTimer += dt;
+                this.currentVelocity = cc.v3(0, this.movementSpeed, 0); // Move forward
+            } else {
+                this.isAutoMoving = false;
+                this.autoMoveTimer = 0;
+                GameEvents.dispatchEvent(GameEventNames.GameCinematicTutorialDone);
+            }
+        }
+        else{
+            if (this.joystick && this.joystick.Joystick_Vector.mag() > 0 && this.fuelController.isEngineRunning) {
+                let joystickIntensity = this.joystick.Joystick_Vector.mag() / this.joystick.Joystick_Max;
+                this.currentVelocity = this.joystick.Joystick_Vector.normalize().mul(this.movementSpeed);
+                this.idleTime = 0; // Reset idle time
+                this.isIdle = false;
+                this.fuelController.consumeFuel(dt, joystickIntensity);
+            } else {
+                this.currentVelocity.mulSelf(this.decelerationFactor);
+                this.idleTime += dt;
+                if (this.idleTime > 2) { // Wait for 2 second of inactivity to consider the boat idle
+                    this.isIdle = true;
+                }
             }
         }
 
@@ -68,11 +88,15 @@ export default class BoatInputController extends cc.Component {
         }
     }
 
+    private HandleOnCinematicTutorialStart = () => {
+        this.isAutoMoving = true;
+    };
+
     private HandleOnFuelLow = () => {
     };
 
     private HandleOnFuelDepleted = () => {
-        this.fuelManager.stopEngine();
+        this.fuelController.stopEngine();
     };
 
     private HandleOnFuelRefuled = () => {
@@ -93,7 +117,7 @@ export default class BoatInputController extends cc.Component {
     }
     
     private handleRotation(dt: number): void {
-        if (this.joystick && this.joystick.Joystick_Vector.mag() > 0 && this.fuelManager.isEngineRunning) {
+        if (this.joystick && this.joystick.Joystick_Vector.mag() > 0 && this.fuelController.isEngineRunning) {
             // Calculate the target rotation based on joystick input
             this.calculateTargetRotation(this.joystick.Joystick_Vector);
         }
