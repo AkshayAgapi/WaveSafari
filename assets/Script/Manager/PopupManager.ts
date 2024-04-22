@@ -14,6 +14,9 @@ export default class PopupManager extends cc.Component {
     @property(PopupBase)
     initialStartPopup: PopupBase = null;
 
+    @property(PopupBase)
+    boatUpgradePopup: PopupBase = null;
+
     private static instance: PopupManager;
 
     public static getInstance(): PopupManager {
@@ -46,6 +49,10 @@ export default class PopupManager extends cc.Component {
         this.initialStartPopup.OnShow();
     }
 
+    public showUpgradePopup(): void{
+        this.boatUpgradePopup.OnShow();
+    }
+
     public hideMainPopup(): void {
         this.mainPopup.OnHide();
     }
@@ -56,5 +63,9 @@ export default class PopupManager extends cc.Component {
 
     public hideStartPopup(): void {
         this.initialStartPopup.OnHide();
+    }
+
+    public hideUpgradePopup(): void{
+        this.boatUpgradePopup.OnShow();
     }
 }

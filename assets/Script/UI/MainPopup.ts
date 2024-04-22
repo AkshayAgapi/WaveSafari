@@ -2,6 +2,7 @@ import { BoatUpgrade } from "../Data/BoatUpgradeData";
 import PlayerData from "../Data/PlayerData";
 import GameManager from "../Manager/GameManager";
 import { PopupBase } from "../Manager/PopupBase";
+import PopupManager from "../Manager/PopupManager";
 import BoatSettingCard from "./BoatSettingCard";
 
 const {ccclass, property} = cc._decorator;
@@ -91,6 +92,11 @@ export default class MainPopup extends PopupBase {
         }
         this.selectedCard = card;
         this.selectedCard.select();
+
+        if(card.isCardLocked)
+        {
+            PopupManager.getInstance().showUpgradePopup();
+        }
     }
 
     onDestroy() {

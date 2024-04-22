@@ -50,21 +50,21 @@ export default class Boat extends cc.Component {
     onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         console.log("collision : "+other.name);
         let collectable = other.getComponent(Collectable);
-
+    
         if (collectable) {
             collectable.collect();
-        }else {
+        } else {
             let obstacleCollider = other.getComponent(ObstacleCollider);
-            if(obstacleCollider){
-                switch(obstacleCollider.GetObstacleColliderType()){
+            if(obstacleCollider) {
+                switch(obstacleCollider.GetObstacleColliderType()) {
                     case ObstacleColliderType.FinsihLine:
+                        GameEvents.dispatchEvent(GameEventNames.GameSplashZoomStart);
                         PopupManager.getInstance().showResultPopup(ResultState.FirstSafariDone);
                         break;
                     case ObstacleColliderType.Island:
-                        this.getComponent(DamageController)?.applyDamage();
+                        this.getComponent(DamageController).applyDamage();
                         break;
                 }
-                GameEvents.dispatchEvent(GameEventNames.OnCollisionWithObstacles, obstacleCollider.GetObstacleColliderType());
             }
         }
     }

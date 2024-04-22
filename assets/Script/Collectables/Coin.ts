@@ -9,6 +9,6 @@ class Coin extends Collectable {
 
     collect(): void {
         ScoreManager.getInstance().addScore(this.value);
-        this.node.destroy();
+        this.showCollectableAnimation();
     }
 }

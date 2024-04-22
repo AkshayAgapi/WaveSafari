@@ -32,7 +32,12 @@ export default class BoatSettingCard extends cc.Component {
 
     cardId : number = 0;
     isSelected: boolean = false;
+    isCardLocked: boolean = false;
     contentSize : cc.Size = null;
+
+    public IsCardLocked(): boolean{
+        return this.isCardLocked;
+    }
 
     public setData(upgradeData: BoatUpgrade) : void{
         
@@ -42,6 +47,7 @@ export default class BoatSettingCard extends cc.Component {
         this.fuelConsumptionProgress.fillRange = (GameConst.FUEL_CONSUMPTION_RATE * upgradeData.fuelConsumption ) / 8; 
 
         this.headingLabel.string = upgradeData.name;
+        this.isCardLocked = !upgradeData.unlocked;
         this.lockPanel.active = !upgradeData.unlocked;
 
         this.priceValueLabel.string = upgradeData.cost.toString();

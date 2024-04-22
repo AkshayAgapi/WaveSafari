@@ -17,8 +17,9 @@ export default class PlayerData extends cc.Component {
     }
 
     // Save the total coins collected to storage
-    static saveTotalCoins(value: number): void {
-        localStorage.setItem(PlayerData.COINS_KEY, value.toString());
+    static saveTotalCoins(sessionCoins: number): void {
+        var newTotalCoins = this.getTotalCoins() + sessionCoins
+        localStorage.setItem(PlayerData.COINS_KEY, newTotalCoins.toString());
     }
 
     // Add coins to the current total and save

@@ -55,7 +55,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 0
+      "z": 2
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -71,7 +71,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "_is3DNode": false,
+    "_is3DNode": true,
     "groupIndex": 0,
     "_id": ""
   },

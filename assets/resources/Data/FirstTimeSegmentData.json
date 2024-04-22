@@ -69,6 +69,166 @@
             "id": 2,
             "items": [
                 {
+                    "type": "gem",
+                    "position": {
+                        "x": 95.528,
+                        "y": -965.82
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 99.869,
+                        "y": -620.025
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 95.566,
+                        "y": -778.728
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 95.724,
+                        "y": -482.883
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 95.577,
+                        "y": -341.481
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 381.227,
+                        "y": 756.103
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 381.227,
+                        "y": 587.144
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "fuelCan",
+                    "position": {
+                        "x": 80.986,
+                        "y": -170.23
+                    },
+                    "scale": {
+                        "x": 0.23,
+                        "y": 0.23
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 246,
+                        "height": 233
+                    }
+                },
+                {
                     "type": "island1",
                     "position": {
                         "x": 877.65,
@@ -107,116 +267,21 @@
                         "width": 1955,
                         "height": 1192
                     }
-                },
-                {
-                    "type": "gem",
-                    "position": {
-                        "x": 67.223,
-                        "y": -133.648
-                    },
-                    "scale": {
-                        "x": 0.4,
-                        "y": 0.4
-                    },
-                    "rotation": 0,
-                    "anchor": {
-                        "x": 0.5,
-                        "y": 0.5
-                    },
-                    "size": {
-                        "width": 114,
-                        "height": 114
-                    }
-                },
-                {
-                    "type": "gem",
-                    "position": {
-                        "x": 99.869,
-                        "y": 212.147
-                    },
-                    "scale": {
-                        "x": 0.4,
-                        "y": 0.4
-                    },
-                    "rotation": 0,
-                    "anchor": {
-                        "x": 0.5,
-                        "y": 0.5
-                    },
-                    "size": {
-                        "width": 114,
-                        "height": 114
-                    }
-                },
-                {
-                    "type": "gem",
-                    "position": {
-                        "x": 95.566,
-                        "y": 53.444
-                    },
-                    "scale": {
-                        "x": 0.4,
-                        "y": 0.4
-                    },
-                    "rotation": 0,
-                    "anchor": {
-                        "x": 0.5,
-                        "y": 0.5
-                    },
-                    "size": {
-                        "width": 114,
-                        "height": 114
-                    }
-                },
-                {
-                    "type": "gem",
-                    "position": {
-                        "x": 95.724,
-                        "y": 349.289
-                    },
-                    "scale": {
-                        "x": 0.4,
-                        "y": 0.4
-                    },
-                    "rotation": 0,
-                    "anchor": {
-                        "x": 0.5,
-                        "y": 0.5
-                    },
-                    "size": {
-                        "width": 114,
-                        "height": 114
-                    }
-                },
-                {
-                    "type": "gem",
-                    "position": {
-                        "x": 95.577,
-                        "y": 490.691
-                    },
-                    "scale": {
-                        "x": 0.4,
-                        "y": 0.4
-                    },
-                    "rotation": 0,
-                    "anchor": {
-                        "x": 0.5,
-                        "y": 0.5
-                    },
-                    "size": {
-                        "width": 114,
-                        "height": 114
-                    }
-                },
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "items": [
                 {
                     "type": "fuelCan",
                     "position": {
-                        "x": 80.986,
-                        "y": 715.722
+                        "x": -163.218,
+                        "y": -970.078
                     },
                     "scale": {
-                        "x": 0.3,
-                        "y": 0.3
+                        "x": 0.23,
+                        "y": 0.23
                     },
                     "rotation": 0,
                     "anchor": {
@@ -227,12 +292,87 @@
                         "width": 246,
                         "height": 233
                     }
-                }
-            ]
-        },
-        {
-            "id": 3,
-            "items": [
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 221.904,
+                        "y": -569.197
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 224.964,
+                        "y": -299.374
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 222.641,
+                        "y": -429.689
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
+                {
+                    "type": "gem",
+                    "position": {
+                        "x": 225.828,
+                        "y": -167.781
+                    },
+                    "scale": {
+                        "x": 0.4,
+                        "y": 0.4
+                    },
+                    "rotation": 0,
+                    "anchor": {
+                        "x": 0.5,
+                        "y": 0.5
+                    },
+                    "size": {
+                        "width": 114,
+                        "height": 114
+                    }
+                },
                 {
                     "type": "island1",
                     "position": {
@@ -311,86 +451,6 @@
                     "size": {
                         "width": 1955,
                         "height": 1192
-                    }
-                },
-                {
-                    "type": "gem",
-                    "position": {
-                        "x": 118.555,
-                        "y": -292.067
-                    },
-                    "scale": {
-                        "x": 0.4,
-                        "y": 0.4
-                    },
-                    "rotation": 0,
-                    "anchor": {
-                        "x": 0.5,
-                        "y": 0.5
-                    },
-                    "size": {
-                        "width": 114,
-                        "height": 114
-                    }
-                },
-                {
-                    "type": "gem",
-                    "position": {
-                        "x": 121.615,
-                        "y": -22.244
-                    },
-                    "scale": {
-                        "x": 0.4,
-                        "y": 0.4
-                    },
-                    "rotation": 0,
-                    "anchor": {
-                        "x": 0.5,
-                        "y": 0.5
-                    },
-                    "size": {
-                        "width": 114,
-                        "height": 114
-                    }
-                },
-                {
-                    "type": "gem",
-                    "position": {
-                        "x": 119.292,
-                        "y": -152.559
-                    },
-                    "scale": {
-                        "x": 0.4,
-                        "y": 0.4
-                    },
-                    "rotation": 0,
-                    "anchor": {
-                        "x": 0.5,
-                        "y": 0.5
-                    },
-                    "size": {
-                        "width": 114,
-                        "height": 114
-                    }
-                },
-                {
-                    "type": "gem",
-                    "position": {
-                        "x": 122.479,
-                        "y": 109.349
-                    },
-                    "scale": {
-                        "x": 0.4,
-                        "y": 0.4
-                    },
-                    "rotation": 0,
-                    "anchor": {
-                        "x": 0.5,
-                        "y": 0.5
-                    },
-                    "size": {
-                        "width": 114,
-                        "height": 114
                     }
                 },
                 {

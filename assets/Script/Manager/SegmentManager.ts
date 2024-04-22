@@ -1,3 +1,4 @@
+import { Collectable } from "../Collectables/Collectable";
 import PlayerData from "../Data/PlayerData";
 
 const {ccclass, property} = cc._decorator;
@@ -103,7 +104,14 @@ export default class SegmentManager extends cc.Component {
                 const newItem: cc.Node = cc.instantiate(prefab);
                 newItem.name = item.type.toString();
                 newItem.setParent(newSegment);
-                newItem.setPosition(cc.v2(item.position.x, item.position.y));
+                newItem.setPosition(cc.v3(item.position.x, item.position.y));
+                
+                var collectable = newItem.getComponent(Collectable);
+                if(collectable){
+                    newItem.zIndex = 2;
+                }
+
+                console.log(newItem.zIndex);
     
                 // Set scale if it's defined
                 if (item.scale) {

@@ -1,9 +1,11 @@
 import Joystick from "../../Module/Joystick/Joystick/Joystick";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
+import DamageController from "../Controller/DamageController";
 import PlayerData from "../Data/PlayerData";
 import FuelController from "./FuelController";
 import HUDManager from "./HudManager";
 import PopupManager from "./PopupManager";
+import ScoreManager from "./ScoreManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -20,6 +22,7 @@ export default class GameManager extends cc.Component {
     joyStick: Joystick = null;
 
     public fuelController : FuelController = null;
+    public damageController : DamageController = null;
 
     private isGamePaused: boolean = false;
     private static instance: GameManager;
@@ -46,6 +49,7 @@ export default class GameManager extends cc.Component {
         this.joyStick.TurnOff();
         HUDManager.getInstance().hideHudElements();
         this.fuelController = this.boat.getComponent(FuelController);
+        this.damageController = this.boat.getComponent(DamageController);
     }
 
     protected onDestroy(): void {
@@ -62,6 +66,8 @@ export default class GameManager extends cc.Component {
     private HandleOnGameRestarted = () => {
         this.joyStick.TurnOn();
         HUDManager.getInstance().showHudElements();
+        HUDManager.getInstance().setFuel(0);
+        ScoreManager.getInstance().resetScore();
 
         if(this.fuelController != null){
             this.fuelController.refuel(100);
@@ -75,7 +81,6 @@ export default class GameManager extends cc.Component {
     initGame() {
         this.checkFirstTimeUser();
     }
-
 
     onSplashScreenEnd() {
         //this.fadeOutSplashScreen();

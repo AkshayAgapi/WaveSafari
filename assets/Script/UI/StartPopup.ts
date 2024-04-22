@@ -4,10 +4,14 @@ import { PopupBase } from "../Manager/PopupBase";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class NewClass extends PopupBase {
+export default class StartPopup extends PopupBase {
 
     @property(cc.Button)
     continueButton: cc.Button = null;
+
+    @property(cc.Node)
+    sailorNode: cc.Node = null;
+
 
     onLoad() {
         if (this.continueButton) {

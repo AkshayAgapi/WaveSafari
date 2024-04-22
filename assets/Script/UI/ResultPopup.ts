@@ -1,3 +1,6 @@
+import DamageController from "../Controller/DamageController";
+import FuelController from "../Manager/FuelController";
+import GameManager from "../Manager/GameManager";
 import { PopupBase } from "../Manager/PopupBase";
 import PopupManager from "../Manager/PopupManager";
 import ScoreManager from "../Manager/ScoreManager";
@@ -45,6 +48,7 @@ export default class ResultPopup extends PopupBase {
         super.OnShow();
         this.updateLabelBasedOnState();
         this.coinsCollectedLabel.string = ScoreManager.getInstance().getScore()+" COINS";
+        this.damagePercentageLabel.string = "DAMAGE "+GameManager.getInstance().boat.getComponent(DamageController).getTotalDamage().toString() +"%";
     }
 
     private updateLabelBasedOnState(): void {

@@ -1,7 +1,9 @@
 import { GameConst } from "../Common/GameConstant";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import PlayerData from "../Data/PlayerData";
+import { ResultState } from "../UI/ResultPopup";
 import HUDManager from "./HudManager";
+import PopupManager from "./PopupManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -62,7 +64,6 @@ export default class FuelController extends cc.Component {
             HUDManager.getInstance().setFuel(this.currentFuel);
             if (this.currentFuel === 0) {
                 GameEvents.dispatchEvent(GameEventNames.FuelDepleted);
-                this.stopEngine();  // Automatically stop the engine when fuel is depleted
             } else if (this.currentFuel <= this.maxFuel * 0.1) {
                 GameEvents.dispatchEvent(GameEventNames.FuelLow);
             }

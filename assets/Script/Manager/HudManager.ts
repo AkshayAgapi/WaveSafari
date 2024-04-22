@@ -14,6 +14,12 @@ export default class HUDManager extends cc.Component{
     @property(cc.Node)
     hudElementParent: cc.Node = null;
 
+    @property(cc.Node)
+    public coinHudUI: cc.Node = null;
+
+    @property(cc.Node)
+    public fuelHudPos: cc.Node = null;
+
     private static instance: HUDManager;
 
     public static getInstance(): HUDManager {

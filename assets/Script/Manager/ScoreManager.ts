@@ -1,3 +1,5 @@
+import GameEvents, { GameEventNames } from "../Common/GameEvents";
+import PlayerData from "../Data/PlayerData";
 import HUDManager from "./HudManager";
 
 const {ccclass, property} = cc._decorator;
@@ -24,7 +26,13 @@ export default class ScoreManager extends cc.Component  {
             ScoreManager.instance = this;
             cc.game.addPersistRootNode(this.node);
         }
+
+        GameEvents.on(GameEventNames.GameEnd, this.HandleOnGameEnd);
     }
+
+    private HandleOnGameEnd = () => {
+        PlayerData.saveTotalCoins(this.score);
+    };
 
     public addScore(value: number): void {
         this.score += value;
@@ -33,5 +41,13 @@ export default class ScoreManager extends cc.Component  {
 
     public getScore(): number {
         return this.score;
+    }
+
+    public resetScore(): void{
+        this.score = 0;
+    }
+
+    protected onDestroy(): void {
+        GameEvents.off(GameEventNames.GameEnd, this.HandleOnGameEnd);
     }
 }
