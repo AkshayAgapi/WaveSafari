@@ -4,8 +4,9 @@ import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import { BoatUpgrade } from "../Data/BoatUpgradeData";
 import PlayerData from "../Data/PlayerData";
 import FuelController from "../Manager/FuelController";
+import HUDManager from "../Manager/HudManager";
 import PopupManager from "../Manager/PopupManager";
-import { ResultState } from "../UI/ResultPopup";
+import ResultPopup, { ResultState } from "../UI/ResultPopup";
 
 const { ccclass, property } = cc._decorator;
 
@@ -65,7 +66,7 @@ export default class BoatInputController extends cc.Component {
 
         if (!this.fuelController.isEngineRunning && this.waitForStop) {
             if (this.currentVelocity.fuzzyEquals(cc.Vec3.ZERO, 5)) {
-                PopupManager.getInstance().showResultPopup(ResultState.FuelEmpty);
+                PopupManager.getInstance().showPopup(ResultPopup, [ResultState.FuelEmpty]);
                 GameEvents.dispatchEvent(GameEventNames.GameEnd);
                 this.waitForStop = false; 
             }
@@ -97,6 +98,7 @@ export default class BoatInputController extends cc.Component {
 
     private handleJoystickInput(dt: number): void {
         if (this.joystick && this.joystick.Joystick_Vector.mag() > 0 && this.fuelController.isEngineRunning) {
+            HUDManager.getInstance().setVisibilityFingerTutorial(false);
             let joystickIntensity = this.joystick.Joystick_Vector.mag() / this.joystick.Joystick_Max;
             this.currentVelocity = this.joystick.Joystick_Vector.normalize().mul(this.movementSpeed);
             this.fuelController.consumeFuel(dt, joystickIntensity);
@@ -114,7 +116,7 @@ export default class BoatInputController extends cc.Component {
 
     private HandleOnFuelDepleted = () => {
         this.fuelController.stopEngine();
-        this.waitForStop = true; // Start checking for boat stop
+        this.waitForStop = true; 
     };
 
     private HandleOnFuelRefuled = () => {

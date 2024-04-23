@@ -4,7 +4,7 @@ import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import BoatInputController from "../Controller/BoatInputController";
 import DamageController from "../Controller/DamageController";
 import PopupManager from "../Manager/PopupManager";
-import { ResultState } from "../UI/ResultPopup";
+import ResultPopup, { ResultState } from "../UI/ResultPopup";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -58,8 +58,7 @@ export default class Boat extends cc.Component {
             if(obstacleCollider) {
                 switch(obstacleCollider.GetObstacleColliderType()) {
                     case ObstacleColliderType.FinsihLine:
-                        GameEvents.dispatchEvent(GameEventNames.GameSplashZoomStart);
-                        PopupManager.getInstance().showResultPopup(ResultState.FirstSafariDone);
+                        PopupManager.getInstance().showPopup(ResultPopup, [ResultState.FirstSafariDone]);
                         break;
                     case ObstacleColliderType.Island:
                         this.getComponent(DamageController).applyDamage();

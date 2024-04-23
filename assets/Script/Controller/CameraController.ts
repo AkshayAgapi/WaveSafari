@@ -76,14 +76,14 @@ export default class CameraController extends cc.Component {
     private zoomOut(): void {
         cc.tween(this.cameraComponent)
         .to(1, { zoomRatio: 0.6 })
-        .call(() => console.log("Zoom in completed"))
+        .call(() => console.log("Zoom out completed"))
         .start();
     }
 
     private zoomOutSlowly(): void {
         cc.tween(this.cameraComponent)
         .to(6, { zoomRatio: 0.6 }, { easing: 'quadInOut' })
-        .call(() => console.log("Zoom in completed"))
+        .call(() => console.log("Zoom out slowly completed"))
         .start();
     }
 }

@@ -9,12 +9,15 @@ export abstract class PopupBase extends cc.Component {
     @property(cc.Node)
     background: cc.Node = null; 
 
-    public OnShow(): void {
-        this.node.active = true; 
+    public onShow(params?: any[]): void {
+        this.node.active = true;
+        this.setupPopup(params);
         this.initPopup();
     }
 
-    public OnHide(): void {
+    protected abstract setupPopup(params?: any[]): void;
+
+    public onHide(): void {
         this.hidePopupTween();
     }
 

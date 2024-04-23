@@ -1,71 +1,69 @@
-import ResultPopup, { ResultState } from "../UI/ResultPopup";
 import { PopupBase } from "./PopupBase";
 
-const { ccclass, property } = cc._decorator;
+const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class PopupManager extends cc.Component {
-    @property(PopupBase)
-    mainPopup: PopupBase = null;
 
-    @property(ResultPopup)
-    resultPopup: ResultPopup = null;
+    @property([PopupBase])
+    popupPrefabs: PopupBase[] = [];
 
-    @property(PopupBase)
-    initialStartPopup: PopupBase = null;
-
-    @property(PopupBase)
-    boatUpgradePopup: PopupBase = null;
-
+    private _popups: Map<string, PopupBase> = new Map();
     private static instance: PopupManager;
 
     public static getInstance(): PopupManager {
         if (!PopupManager.instance) {
-            return PopupManager.instance;
-            
+            PopupManager.instance = new PopupManager();
         }
         return PopupManager.instance;
     }
- 
-    override onLoad() {
- 
+
+    onLoad() {
         if (PopupManager.instance) {
-            this.node.destroy(); 
+            this.node.destroy();
         } else {
-            PopupManager.instance = this; 
+            PopupManager.instance = this;
+            cc.game.addPersistRootNode(this.node); // Make this node persistent
+            this.registerAllPopups();
         }
     }
 
-    public showMainPopup(): void {
-        this.mainPopup.OnShow();
+    private registerAllPopups() {
+        this.popupPrefabs.forEach(prefab => {
+            this._popups.set(prefab.name, prefab);
+            prefab.node.active = false; // Initially deactivate
+        });
     }
 
-    public showResultPopup(state: ResultState): void {
-        this.resultPopup.setState(state);
-        this.resultPopup.OnShow();
+    public showPopup<T extends PopupBase>(ctor: { new(): T }, params?: any[]): void {
+        const popup = this.getPopupByConstructor(ctor);
+        if (popup) {
+            this._popups.forEach(p => {
+                if (p !== popup) {
+                    p.onHide();
+                }
+            });
+            popup.onShow(params);
+        } else {
+            console.warn(`PopupManager: Popup not found.`);
+        }
     }
 
-    public showStartPopup(): void {
-        this.initialStartPopup.OnShow();
+    public hidePopup<T extends PopupBase>(ctor: { new(): T }): void {
+        const popup = this.getPopupByConstructor(ctor);
+        if (popup) {
+            popup.onHide();
+        } else {
+            console.warn(`PopupManager: Popup not found.`);
+        }
     }
 
-    public showUpgradePopup(): void{
-        this.boatUpgradePopup.OnShow();
-    }
-
-    public hideMainPopup(): void {
-        this.mainPopup.OnHide();
-    }
-
-    public hideResultPopup(): void {
-        this.resultPopup.OnHide();
-    }
-
-    public hideStartPopup(): void {
-        this.initialStartPopup.OnHide();
-    }
-
-    public hideUpgradePopup(): void{
-        this.boatUpgradePopup.OnShow();
+    private getPopupByConstructor<T extends PopupBase>(ctor: { new(): T }): PopupBase | undefined {
+        for (let [key, popup] of this._popups) {
+            if (popup instanceof ctor) {
+                return popup;
+            }
+        }
+        return undefined;
     }
 }

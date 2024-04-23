@@ -20,6 +20,9 @@ export default class HUDManager extends cc.Component{
     @property(cc.Node)
     public fuelHudPos: cc.Node = null;
 
+    @property(cc.Node)
+    public fingerTutorialNode: cc.Node = null;
+
     private static instance: HUDManager;
 
     public static getInstance(): HUDManager {
@@ -46,24 +49,29 @@ export default class HUDManager extends cc.Component{
     }
 
     // Update damage level on the damage indicator sprite
-    setDamage(damage: number) {
+    public setDamage(damage: number) {
         if (this.damageIndicator) {
             this.damageIndicator.fillRange = damage / 100; 
         }
     }
 
     // Update fuel level on the fuel indicator sprite
-    setFuel(fuel: number) {
+    public setFuel(fuel: number) {
         if (this.fuelIndicator) {
             this.fuelIndicator.fillRange = fuel / 100; 
         }
     }
 
     // Update coin count
-    setCoins(coinCount: number) {
+    public setCoins(coinCount: number) {
         if (this.coinLabel) {
             this.coinLabel.string = coinCount.toString();
         }
+    }
+
+    public setVisibilityFingerTutorial(visible)
+    {
+        this.fingerTutorialNode.active = visible;
     }
 
     public hideHudElements()

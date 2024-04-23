@@ -2,6 +2,8 @@ import Joystick from "../../Module/Joystick/Joystick/Joystick";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import DamageController from "../Controller/DamageController";
 import PlayerData from "../Data/PlayerData";
+import StartPopup from "../UI/StartPopup";
+import AudioManager, { SoundClipType } from "./AudioManager";
 import FuelController from "./FuelController";
 import HUDManager from "./HudManager";
 import PopupManager from "./PopupManager";
@@ -76,6 +78,10 @@ export default class GameManager extends cc.Component {
 
     private HandleOnGameTutorialDone = () => {
         GameEvents.dispatchEvent(GameEventNames.GameRestarted);
+        this.scheduleOnce(() => {
+            HUDManager.getInstance().setVisibilityFingerTutorial(true);
+        }, 4);
+        AudioManager.getInstance().playBGM(SoundClipType.GAMEPLAY_BGM);
     };
 
     initGame() {
@@ -104,9 +110,10 @@ export default class GameManager extends cc.Component {
             this.scheduleOnce(() => {
                 console.log("Dispatch GameCinematicTutorialStart");
                 //GameEvents.dispatchEvent(GameEventNames.GameCinematicTutorialStart);
-                PopupManager.getInstance().showStartPopup();
+                PopupManager.getInstance().showPopup(StartPopup);
             }, 7); 
         } else {
+            AudioManager.getInstance().playBGM(SoundClipType.GAMEPLAY_BGM);
             this.startGame();
         }
     }

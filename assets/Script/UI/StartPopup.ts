@@ -1,4 +1,5 @@
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
+import AudioManager, { SoundClipType } from "../Manager/AudioManager";
 import { PopupBase } from "../Manager/PopupBase";
 
 const {ccclass, property} = cc._decorator;
@@ -19,18 +20,23 @@ export default class StartPopup extends PopupBase {
         }
     }
 
-    OnShow(): void {
-        super.OnShow();
+    onShow(params?: any[]): void {
+        super.onShow(params);
     }
 
-    OnHide(): void {
-        super.OnHide();
+    protected setupPopup(params?: any[]): void {
+    }
+
+    onHide(): void {
+        super.onHide();
     }
 
     onContinueButtonClicked(): void {
         GameEvents.dispatchEvent(GameEventNames.GameCinematicTutorialStart);
-        this.OnHide();
+        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+        this.onHide();
     }
+
 
     onDestroy() {
         if (this.continueButton) {

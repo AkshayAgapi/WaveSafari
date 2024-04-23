@@ -47,7 +47,6 @@ export default class Joystick extends cc.Component {
         let touch_pos = event.getLocation();
         let world_pos = this.node.convertToNodeSpaceAR(touch_pos);
     
-        // Assuming 'this.joystickNode' refers to your actual joystick node
         this.JoystickNode.setPosition(world_pos);
         this.JoystickNode.active = true;
     }
@@ -69,11 +68,7 @@ export default class Joystick extends cc.Component {
     private Joystick_Touch_End(): void {
         this.Joystick_Vector = cc.Vec3.ZERO;
         this.Set_Joystick_Ball_Position(cc.Vec3.ZERO);
-
-          // Optionally hide or move the joystick off-screen
-    // this.node.setPosition(offScreenPosition);
-    // OR
-    this.JoystickNode.active = false; // Make the whole joystick disappear after lifting the finger
+        this.JoystickNode.active = false; // Make the whole joystick disappear after lifting the finger
     }
 
     private Set_Joystick_Ball_Position(pos: cc.Vec3): void {

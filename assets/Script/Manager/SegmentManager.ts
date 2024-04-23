@@ -110,9 +110,7 @@ export default class SegmentManager extends cc.Component {
                 if(collectable){
                     newItem.zIndex = 2;
                 }
-
-                console.log(newItem.zIndex);
-    
+                    
                 // Set scale if it's defined
                 if (item.scale) {
                     newItem.setScale(item.scale.x, item.scale.y);

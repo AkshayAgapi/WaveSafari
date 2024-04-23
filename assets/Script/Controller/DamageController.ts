@@ -1,7 +1,8 @@
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
+import AudioManager, { SoundClipType } from "../Manager/AudioManager";
 import HUDManager from "../Manager/HudManager";
 import PopupManager from "../Manager/PopupManager";
-import { ResultState } from "../UI/ResultPopup";
+import ResultPopup, { ResultState } from "../UI/ResultPopup";
 
 const { ccclass, property } = cc._decorator;
 
@@ -36,10 +37,11 @@ export default class DamageController extends cc.Component {
         console.log("Damage applied to the boat");
         this.totalDamage += this.damagePerCollide;
         HUDManager.getInstance().setDamage(this.totalDamage);
+        AudioManager.getInstance().playSfx(SoundClipType.COLLISION_SFX);
 
         if(this.totalDamage > 100)
         {
-            PopupManager.getInstance().showResultPopup(ResultState.FullDamage);
+            PopupManager.getInstance().showPopup(ResultPopup, [ResultState.FullDamage])
             GameEvents.dispatchEvent(GameEventNames.GameEnd);
         }
     }

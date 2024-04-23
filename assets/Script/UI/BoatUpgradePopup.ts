@@ -1,10 +1,11 @@
+import AudioManager, { SoundClipType } from "../Manager/AudioManager";
 import { PopupBase } from "../Manager/PopupBase";
 
 const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class BoatUpgradePopup extends PopupBase {
-
+    
     @property(cc.Button)
     upgradeButton: cc.Button = null;
 
@@ -20,15 +21,19 @@ export default class BoatUpgradePopup extends PopupBase {
         }
     }
 
-    public OnShow(): void {
-        super.OnShow();
+    protected setupPopup(params?: any[]): void {
     }
 
-    public OnHide(): void {
-        super.OnHide();
+    public onShow(): void {
+        super.onShow();
+    }
+
+    public onHide(): void {
+        super.onHide();
     }
 
     private onUpgradeButtonCliked(): void {
-       this.OnHide();
+        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+       this.onHide();
     }
 }

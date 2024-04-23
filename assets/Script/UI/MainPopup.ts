@@ -1,9 +1,11 @@
 import { BoatUpgrade } from "../Data/BoatUpgradeData";
 import PlayerData from "../Data/PlayerData";
+import AudioManager, { SoundClipType } from "../Manager/AudioManager";
 import GameManager from "../Manager/GameManager";
 import { PopupBase } from "../Manager/PopupBase";
 import PopupManager from "../Manager/PopupManager";
 import BoatSettingCard from "./BoatSettingCard";
+import BoatUpgradePopup from "./BoatUpgradePopup";
 
 const {ccclass, property} = cc._decorator;
 
@@ -25,15 +27,15 @@ export default class MainPopup extends PopupBase {
     private instantiatedCards: cc.Node[] = [];
     private selectedCard: BoatSettingCard = null;
 
-    OnShow(): void {
+    onShow(params?: any[]): void {
 
-        super.OnShow();
+        super.onShow(params);
         this.totalCoinValueLabel.string = PlayerData.getTotalCoins().toString();
         this.loadUpgradeCards();
     }
 
-    OnHide(): void {
-        super.OnHide();
+    onHide(): void {
+        super.onHide();
         this.instantiatedCards.forEach(card => card.destroy());
         this.instantiatedCards = [];
         this.selectedCard = null;
@@ -45,9 +47,13 @@ export default class MainPopup extends PopupBase {
         }
     }
 
+    protected setupPopup(params?: any[]): void {
+    }
+
     onPlayButtonClicked(): void {
         GameManager.getInstance().restartGame();
-        this.OnHide();
+        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+        this.onHide();
     }
 
     private loadUpgradeCards() : void {
@@ -93,9 +99,11 @@ export default class MainPopup extends PopupBase {
         this.selectedCard = card;
         this.selectedCard.select();
 
+        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+
         if(card.isCardLocked)
         {
-            PopupManager.getInstance().showUpgradePopup();
+            PopupManager.getInstance().showPopup(BoatUpgradePopup);
         }
     }
 
