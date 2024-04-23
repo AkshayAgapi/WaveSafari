@@ -31,6 +31,7 @@ export default class BoatSettingCard extends cc.Component {
     childContent: cc.Node = null; 
 
     cardId : number = 0;
+    upgradeData : BoatUpgrade = null;
     isSelected: boolean = false;
     isCardLocked: boolean = false;
     contentSize : cc.Size = null;
@@ -41,6 +42,7 @@ export default class BoatSettingCard extends cc.Component {
 
     public setData(upgradeData: BoatUpgrade) : void{
         
+        this.upgradeData = upgradeData;
         this.cardId = upgradeData.id;
         this.speedProgress.fillRange = (GameConst.MOVEMENT_SPEED * upgradeData.speedMultiplier) / 500; 
         this.stabilityProgress.fillRange = upgradeData.stability / 100; 

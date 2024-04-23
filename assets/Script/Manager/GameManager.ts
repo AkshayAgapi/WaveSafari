@@ -2,26 +2,32 @@ import Joystick from "../../Module/Joystick/Joystick/Joystick";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import DamageController from "../Controller/DamageController";
 import PlayerData from "../Data/PlayerData";
+import Boat from "../Entities/Boat";
+import MainPopup from "../UI/MainPopup";
 import StartPopup from "../UI/StartPopup";
 import AudioManager, { SoundClipType } from "./AudioManager";
 import FuelController from "./FuelController";
 import HUDManager from "./HudManager";
 import PopupManager from "./PopupManager";
 import ScoreManager from "./ScoreManager";
+import SegmentManager from "./SegmentManager";
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class GameManager extends cc.Component {
 
-    @property(cc.Node)
-    boat: cc.Node = null;
+    @property(Boat)
+    boat: Boat = null;
 
     @property(cc.Node)
     splashScreen: cc.Node = null;
 
     @property(Joystick)
     joyStick: Joystick = null;
+
+    @property(SegmentManager)
+    segmentManager: SegmentManager = null;
 
     public fuelController : FuelController = null;
     public damageController : DamageController = null;
@@ -33,7 +39,7 @@ export default class GameManager extends cc.Component {
         return GameManager.instance;
     }
 
-    onLoad() {
+    protected onLoad() {
 
         if (GameManager.instance) {
             this.node.destroy();
@@ -42,8 +48,7 @@ export default class GameManager extends cc.Component {
         }
 
         this.initGame();
-        GameEvents.on(GameEventNames.GameEnd, this.HandleOnGameEnd);
-        GameEvents.on(GameEventNames.GameRestarted, this.HandleOnGameRestarted);
+        GameEvents.on(GameEventNames.GameEnd, this.handleOnGameEnd);
         GameEvents.on(GameEventNames.GameCinematicTutorialDone, this.HandleOnGameTutorialDone);
     }
 
@@ -55,17 +60,16 @@ export default class GameManager extends cc.Component {
     }
 
     protected onDestroy(): void {
-        GameEvents.off(GameEventNames.GameEnd, this.HandleOnGameEnd);
-        GameEvents.off(GameEventNames.GameRestarted, this.HandleOnGameRestarted);
+        GameEvents.off(GameEventNames.GameEnd, this.handleOnGameEnd);
         GameEvents.off(GameEventNames.GameCinematicTutorialDone, this.HandleOnGameTutorialDone);
     }
 
-    private HandleOnGameEnd = () => {
+    private handleOnGameEnd = () => {
         this.joyStick.TurnOff();
         HUDManager.getInstance().hideHudElements();
     };
 
-    private HandleOnGameRestarted = () => {
+    private initGameSetting(){
         this.joyStick.TurnOn();
         HUDManager.getInstance().showHudElements();
         HUDManager.getInstance().setFuel(0);
@@ -74,30 +78,25 @@ export default class GameManager extends cc.Component {
         if(this.fuelController != null){
             this.fuelController.refuel(100);
         }
-    };
+    }
 
     private HandleOnGameTutorialDone = () => {
-        GameEvents.dispatchEvent(GameEventNames.GameRestarted);
+        this.initGameSetting();
         this.scheduleOnce(() => {
             HUDManager.getInstance().setVisibilityFingerTutorial(true);
         }, 4);
         AudioManager.getInstance().playBGM(SoundClipType.GAMEPLAY_BGM);
     };
 
-    initGame() {
+    private initGame() {
         this.checkFirstTimeUser();
     }
 
-    onSplashScreenEnd() {
-        //this.fadeOutSplashScreen();
-        //this.checkFirstTimeUser();
-    }
-
-    checkFirstTimeUser() {
-        const isFirstTime = PlayerData.isFirstTime();
+    private checkFirstTimeUser() {
+        var isFirstTime = PlayerData.isFirstTime();
         if (true) {
                 //disable the joystick input
-            GameEvents.dispatchEvent(GameEventNames.GameSplashZoomStart);
+            GameEvents.dispatchEvent(GameEventNames.GameSplashZoomFirstTimeStart);
         
             this.scheduleOnce(() => {
                 this.fadeInSplashNode();
@@ -108,45 +107,40 @@ export default class GameManager extends cc.Component {
             }, 6);
 
             this.scheduleOnce(() => {
-                console.log("Dispatch GameCinematicTutorialStart");
-                //GameEvents.dispatchEvent(GameEventNames.GameCinematicTutorialStart);
                 PopupManager.getInstance().showPopup(StartPopup);
             }, 7); 
         } else {
-            AudioManager.getInstance().playBGM(SoundClipType.GAMEPLAY_BGM);
             this.startGame();
         }
     }
 
-    startGame() {
-        // Transition to the main game scene or whatever needs to be done next
-    }
-
-    // Optional: Handling first-time user setup
-    handleFirstTimeUser() {
-        // Placeholder for any setup like tutorials or initial configurations
-        console.log("Handle first-time user setup");
-        // Once setup is complete, possibly go to the main game or a tutorial scene
-        cc.director.loadScene("TutorialScene");
+    private startGame() {
+        GameEvents.dispatchEvent(GameEventNames.GameSplashZoomStart);
+        this.scheduleOnce(() => {
+            AudioManager.getInstance().playBGM(SoundClipType.GAMEPLAY_BGM);
+            PopupManager.getInstance().showPopup(MainPopup);
+        }, 1);
     }
 
     public restartGame(){
-        GameEvents.dispatchEvent(GameEventNames.GameRestarted);
+        this.segmentManager.resetSegments();
+        this.boat.resetPoisition();
+        this.initGameSetting();
     }
 
     public pauseGame(): void {
         if (!this.isGamePaused) {
+            AudioManager.getInstance().pauseAllSounds();
             cc.director.pause();
             this.isGamePaused = true;
-            console.log("Game paused.");
         }
     }
 
     public resumeGame(): void {
         if (this.isGamePaused) {
+            AudioManager.getInstance().pauseAllSounds();
             cc.director.resume();
             this.isGamePaused = false;
-            console.log("Game resumed.");
         }
     }
 
@@ -157,10 +151,6 @@ export default class GameManager extends cc.Component {
 
         cc.tween(this.splashScreen)
             .to(2, { opacity: 255 })
-            .call(() => {
-                console.log("Fade in completed.");
-                // Additional actions after fade in
-            })
             .start();
     }
 
@@ -168,8 +158,6 @@ export default class GameManager extends cc.Component {
         cc.tween(this.splashScreen)
             .to(0.5, { opacity: 0 })
             .call(() => {
-                console.log("Fade out completed.");
-                // Additional actions after fade out, like deactivating the node
                 this.splashScreen.active = false;
             })
             .start();

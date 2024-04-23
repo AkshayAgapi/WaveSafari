@@ -10,7 +10,7 @@ class Coin extends Collectable {
     @property
     value: number = 10;
 
-    collect(): void {
+    public collect(): void {
         ScoreManager.getInstance().addScore(this.value);
         this.showCollectableAnimation();
         AudioManager.getInstance().playSfx(SoundClipType.COIN_COLLECTION_SFX);

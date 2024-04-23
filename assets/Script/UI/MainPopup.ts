@@ -24,24 +24,24 @@ export default class MainPopup extends PopupBase {
     @property(cc.Button)
     playButton: cc.Button = null;
 
-    private instantiatedCards: cc.Node[] = [];
-    private selectedCard: BoatSettingCard = null;
+    private _instantiatedCards: cc.Node[] = [];
+    private _selectedCard: BoatSettingCard = null;
 
-    onShow(params?: any[]): void {
+    public onShow(params?: any[]): void {
 
         super.onShow(params);
         this.totalCoinValueLabel.string = PlayerData.getTotalCoins().toString();
         this.loadUpgradeCards();
     }
 
-    onHide(): void {
+    public onHide(): void {
         super.onHide();
-        this.instantiatedCards.forEach(card => card.destroy());
-        this.instantiatedCards = [];
-        this.selectedCard = null;
+        this._instantiatedCards.forEach(card => card.destroy());
+        this._instantiatedCards = [];
+        this._selectedCard = null;
     }
 
-    onLoad() {
+    protected onLoad() {
         if (this.playButton) {
             this.playButton.node.on('click', this.onPlayButtonClicked, this);
         }
@@ -50,24 +50,34 @@ export default class MainPopup extends PopupBase {
     protected setupPopup(params?: any[]): void {
     }
 
-    onPlayButtonClicked(): void {
-        GameManager.getInstance().restartGame();
-        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
-        this.onHide();
+    private onPlayButtonClicked(): void {
+
+        if(PlayerData.isBoatSettingUnlocked(this._selectedCard.cardId)){
+            GameManager.getInstance().restartGame();
+            AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+            this.onHide();
+        }
+        else{
+            PopupManager.getInstance().showPopup(BoatUpgradePopup, [this._selectedCard.upgradeData, this.onPurchaseSuccess]);
+        }
     }
 
     private loadUpgradeCards() : void {
 
         var boatUpgrades = PlayerData.getBoatUpgrades();
 
-        if(this.instantiatedCards.length > 0){
-            this.instantiatedCards.forEach(card => card.destroy());
-            this.instantiatedCards = []; 
+        if(this._instantiatedCards.length > 0){
+            this._instantiatedCards.forEach(card => card.destroy());
+            this._instantiatedCards = []; 
         }
 
         boatUpgrades.forEach(upgrade => {
             this.spawnUpgradeCard(upgrade);
         });
+    }
+
+    private refershCards() : void{
+        this.loadUpgradeCards();
     }
 
     private spawnUpgradeCard(upgradeData: BoatUpgrade): void {
@@ -80,34 +90,37 @@ export default class MainPopup extends PopupBase {
         upgradeCardInstance.setParent(this.parentUI);
         var boatSetting = upgradeCardInstance.getComponent(BoatSettingCard);
         boatSetting.setData(upgradeData);
-        this.instantiatedCards.push(upgradeCardInstance);
+        this._instantiatedCards.push(upgradeCardInstance);
 
         if (upgradeData.id === PlayerData.getCurrentBoatSetting().id) {
             this.selectCard(boatSetting);
         }
 
         upgradeCardInstance.on('click', () => {
-            console.log("clicked");
             this.selectCard(boatSetting);
         });
     }
 
     private selectCard(card: BoatSettingCard) {
-        if (this.selectedCard) {
-            this.selectedCard.deselect();
+        if (this._selectedCard) {
+            this._selectedCard.deselect();
         }
-        this.selectedCard = card;
-        this.selectedCard.select();
+        this._selectedCard = card;
+        this._selectedCard.select();
 
         AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
 
         if(card.isCardLocked)
         {
-            PopupManager.getInstance().showPopup(BoatUpgradePopup);
+            PopupManager.getInstance().showPopup(BoatUpgradePopup, [card.upgradeData, this.onPurchaseSuccess]);
         }
     }
 
-    onDestroy() {
+    private onPurchaseSuccess() {
+        this.refershCards();
+    }
+
+    protected onDestroy() {
         if (this.playButton) {
             this.playButton.node.off('click', this.onPlayButtonClicked, this);
         }

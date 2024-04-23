@@ -41,44 +41,38 @@ export default class AudioManager extends cc.Component{
     @property({ type: cc.AudioClip })
     waveAudio: cc.AudioClip = null;
 
-    @property(cc.SpriteFrame)
-    musicIcon: cc.SpriteFrame = null;
+    private _isMuted: boolean = false;
+    private _bgmEnabled: boolean = true;
+    private _sfxEnabled: boolean = true;
 
-    @property(cc.SpriteFrame)
-    muteIcon: cc.SpriteFrame = null;
-
-    private isMuted: boolean = false;
-
-    private bgmEnabled: boolean = true;
-    private sfxEnabled: boolean = true;
-
-    private static instance: AudioManager;
+    private static _instance: AudioManager;
 
     public static getInstance(): AudioManager {
-        return AudioManager.instance;
+        return AudioManager._instance;
     }
 
-    toggleAudio() {
-        this.isMuted = !this.isMuted;
-      this.toggleSfx();
-      this.toggleBgm();
+    public toggleAudio() : Boolean {
+        this._isMuted = !this._isMuted;
+        this.toggleSfx();
+        this.toggleBgm();
+        this.toggleWaveSfx();
+        return this._isMuted;
     }
 
     protected onLoad(): void {
 
-        if (AudioManager.instance) {
+        if (AudioManager._instance) {
             this.node.destroy();
         } else {
-            AudioManager.instance = this;
+            AudioManager._instance = this;
         }
 
         this.playWaveSfx();
     }
 
-    playSfx(soundClipType: SoundClipType) {
-        if (!this.sfxEnabled)
+    public playSfx(soundClipType: SoundClipType) {
+        if (!this._sfxEnabled)
             return
-        console.log('playSfx   called ');
         const sound = this.GetSoundClip(soundClipType);
         if (sound) {
             this.sfxAudioSource.clip = sound;
@@ -88,22 +82,24 @@ export default class AudioManager extends cc.Component{
         }
     }
 
-    playWaveSfx() {
+    private playWaveSfx() {
+        if (!this._sfxEnabled)
+            return
+
         this.sfxWaveAudioSource.clip = this.waveAudio;
         this.sfxWaveAudioSource.loop = true;
         this.sfxWaveAudioSource.play();
     }
 
-    playBGM(soundClipType: SoundClipType) {
+    public playBGM(soundClipType: SoundClipType) {
        if( this._forceBGMDisable ==true)
        {
-return;
+            return;
        }
-        console.log('playBGM   called ');
         const sound = this.GetSoundClip(soundClipType);
         if (sound ) {
             this.bgmAudioSource.clip = sound;
-            if (this.bgmEnabled) {
+            if (this._bgmEnabled) {
             this.bgmAudioSource.play();
             }
         } else {
@@ -111,7 +107,7 @@ return;
         }
     }
 
-    GetSoundClip(clipType: SoundClipType): cc.AudioClip {
+    private GetSoundClip(clipType: SoundClipType): cc.AudioClip {
         switch (clipType) {
 
             case SoundClipType.GAMEPLAY_BGM:
@@ -131,27 +127,52 @@ return;
         }
     }
 
-    toggleBgm() {
+    public toggleBgm() {
         if( this._forceBGMDisable ==true)
         {
             return;
         }
-        this.bgmEnabled = !this.bgmEnabled;
-        if (this.bgmEnabled) {
+        this._bgmEnabled = !this._bgmEnabled;
+        if (this._bgmEnabled) {
             this.bgmAudioSource.play();
         } else {
-            this.bgmAudioSource.stop();
+            this.bgmAudioSource.pause();
         }
     }
 
-    toggleSfx() {
-        this.sfxEnabled = !this.sfxEnabled;
+    public toggleSfx() {
+        this._sfxEnabled = !this._sfxEnabled;
     }
 
-    DisablGameBGM()
-    {
+    public toggleWaveSfx() {
+        if (this._sfxEnabled) {
+            this.sfxWaveAudioSource.play();
+        } else {
+            this.sfxWaveAudioSource.pause();
+        }
+    }
+
+    public disablGameBGM(){
         this._forceBGMDisable = true;
         this.bgmAudioSource.stop();
         this.bgmAudioSource.enabled = false;
+    }
+
+    public pauseAllSounds(){
+        this.sfxAudioSource.pause();
+        this.bgmAudioSource.pause();
+        this.sfxWaveAudioSource.pause();
+    }
+
+    public resumeAllSounds()
+    {
+        if(this._sfxEnabled){
+            this.sfxAudioSource.pause();
+            this.sfxWaveAudioSource.pause();
+        }
+
+        if(this._bgmEnabled){
+            this.bgmAudioSource.pause();
+        }
     }
 }

@@ -52,23 +52,21 @@ export default class SegmentManager extends cc.Component {
     @property
     segmentHeight: number = 200;
 
-    private currentSegments: cc.Node[] = [];
-    private segmentData: { segments: SegmentData[] } = { segments: [] };
+    private _currentSegments: cc.Node[] = [];
+    private _segmentData: { segments: SegmentData[] } = { segments: [] };
 
     onLoad() {
-        this.currentSegments = [];
+        this._currentSegments = [];
         this.loadSegmentData();
     }
 
-    loadSegmentData() {
+    private loadSegmentData() {
 
         var jsonPath = "";
-        if(PlayerData.isFirstTime() == 1){
+        if(PlayerData.isFirstTime()){
             jsonPath = "Data/FirstTimeSegmentData";
-            console.log("PlayerData.isFirstTime()");
         }else{
             jsonPath = "Data/SegmentData";
-            console.log("PlayerData.isFirstTime() false");
         }
 
         cc.loader.loadRes(jsonPath, cc.JsonAsset, (err, data: cc.JsonAsset) => {
@@ -77,13 +75,12 @@ export default class SegmentManager extends cc.Component {
                 return;
             }
 
-            this.segmentData = data.json;
-            console.log("Segment Data : "+this.segmentData.segments.length);
+            this._segmentData = data.json;
             this.createInitialSegments();
         });
     }
 
-    createInitialSegments(): void {
+    private createInitialSegments(): void {
         let startPosY: number = 0;
         for (let i = 0; i < this.initialSegmentsCount; i++) {
             this.addSegment(startPosY, i);
@@ -91,8 +88,8 @@ export default class SegmentManager extends cc.Component {
         }
     }
 
-    addSegment(yPosition: number, segmentIndex: number): void {
-        const segmentInfo: SegmentData = this.segmentData.segments[segmentIndex % this.segmentData.segments.length];
+    private addSegment(yPosition: number, segmentIndex: number): void {
+        const segmentInfo: SegmentData = this._segmentData.segments[segmentIndex % this._segmentData.segments.length];
         const newSegment: cc.Node = cc.instantiate(this.segmentPrefab);
         newSegment.setParent(this.segmentParent);
         newSegment.setPosition(cc.v2(0, yPosition));
@@ -144,23 +141,18 @@ export default class SegmentManager extends cc.Component {
             }
         });
     
-        this.currentSegments.push(newSegment);
+        this._currentSegments.push(newSegment);
     }
 
-    resetSegments(): void {
-        this.currentSegments.forEach(segment => segment.destroy());
-        this.currentSegments = [];
+    public resetSegments(): void {
+        this._currentSegments.forEach(segment => segment.destroy());
+        this._currentSegments = [];
         let startPosY: number = 0;
         this.loadSegmentData();
     }
-
-    resetBoatPosition(): void {
-        // Assuming 'target' is your boat and you have a specific start position
-        this.target.setPosition(0, 0); // Set to the desired start position
-    }
     
 
-    getPrefabForItemType(type: string): cc.Prefab {
+    private getPrefabForItemType(type: string): cc.Prefab {
         switch (type) {
             case 'island1':
                 return this.island1Prefab;
@@ -179,19 +171,19 @@ export default class SegmentManager extends cc.Component {
         }
     }
 
-    update(dt: number): void {
+    protected update(dt: number): void {
 
-        if (this.currentSegments.length > 0) {
+        if (this._currentSegments.length > 0) {
             let cameraPosY: number = this.target.position.y; // or this.target.position.y for player's Y position
-            let lastSegment = this.currentSegments[this.currentSegments.length - 1];
+            let lastSegment = this._currentSegments[this._currentSegments.length - 1];
             let halfwayY = lastSegment.position.y;
         
             // If the camera's Y position is greater than halfwayY, it's time to recycle the first segment
             if (cameraPosY > halfwayY) {
                 let newPosY = lastSegment.position.y + this.segmentHeight; // Position for the recycled segment
-                let segmentToRecycle = this.currentSegments.shift(); // Remove the first segment
+                let segmentToRecycle = this._currentSegments.shift(); // Remove the first segment
                 segmentToRecycle.setPosition(0, newPosY); // Reposition it to the top
-                this.currentSegments.push(segmentToRecycle); // Add it back to the array as the last element
+                this._currentSegments.push(segmentToRecycle); // Add it back to the array as the last element
             }
         } else {
             // Handle the case where there are no segments (e.g., log a warning or initialize segments)

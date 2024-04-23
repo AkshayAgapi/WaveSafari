@@ -1,3 +1,8 @@
+import CommonPopup from "../UI/CommonPopup";
+import AudioManager from "./AudioManager";
+import GameManager from "./GameManager";
+import PopupManager from "./PopupManager";
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -12,7 +17,10 @@ export default class HUDManager extends cc.Component{
     coinLabel: cc.Label = null;
 
     @property(cc.Node)
-    hudElementParent: cc.Node = null;
+    hudLeftElementParent: cc.Node = null;
+
+    @property(cc.Node)
+    hudRightElementParent: cc.Node = null;
 
     @property(cc.Node)
     public coinHudUI: cc.Node = null;
@@ -22,6 +30,21 @@ export default class HUDManager extends cc.Component{
 
     @property(cc.Node)
     public fingerTutorialNode: cc.Node = null;
+
+    @property(cc.Button)
+    soundToggleButton: cc.Button = null;
+
+    @property(cc.Button)
+    pauseButton: cc.Button = null;
+
+    @property(cc.Sprite)
+    soundImage: cc.Sprite = null;
+
+    @property(cc.SpriteFrame)
+    soundIcon: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    muteIcon: cc.SpriteFrame = null;
 
     private static instance: HUDManager;
 
@@ -43,9 +66,33 @@ export default class HUDManager extends cc.Component{
             //cc.game.addPersistRootNode(this.node); 
         }
 
+
+        this.soundToggleButton.node.on('click', this.onSoundToggleButtonClicked, this);
+        this.pauseButton.node.on('click', this.onPauseButtonClicked, this);
         this.setDamage(0);
         this.setFuel(100);
         this.setCoins(0);
+    }
+
+    protected onDestroy() {
+        this.soundToggleButton.node.off('click', this.onSoundToggleButtonClicked, this);
+        this.pauseButton.node.off('click', this.onPauseButtonClicked, this);
+    }
+
+    private onSoundToggleButtonClicked(): void {
+        var isMuted = AudioManager.getInstance().toggleAudio();
+        this.soundImage.spriteFrame = isMuted? this.muteIcon : this.soundIcon;
+    }
+
+    private onPauseButtonClicked(): void {
+        PopupManager.getInstance().showPopup(CommonPopup,["Game Paused!", "Resume",this.onPopupActionCallback ]);
+        this.scheduleOnce(() => {
+            GameManager.getInstance().pauseGame();
+        }, 0.4);
+    }
+
+    private onPopupActionCallback(){
+        GameManager.getInstance().resumeGame();
     }
 
     // Update damage level on the damage indicator sprite
@@ -76,13 +123,13 @@ export default class HUDManager extends cc.Component{
 
     public hideHudElements()
     {
-        console.log("hideHudElements")
-        this.hudElementParent.active = false;
+        this.hudLeftElementParent.active = false;
+        this.hudRightElementParent.active = false;
     }
 
     public showHudElements()
     {
-        console.log("showHudElements")
-        this.hudElementParent.active = true;
+        this.hudLeftElementParent.active = true;
+        this.hudRightElementParent.active = true;
     }
 }

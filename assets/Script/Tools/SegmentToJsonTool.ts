@@ -6,11 +6,11 @@ export default class SegmentToJsonTool extends cc.Component {
     @property(cc.Node)
     segmentNode: cc.Node = null; // Assign your segment prefab instance here
 
-    start() {
+    protected start() {
         this.generateSegmentJSON();
     }
 
-    generateSegmentJSON() {
+    private generateSegmentJSON() {
         let segmentData = {
             items: []
         };

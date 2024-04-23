@@ -31,18 +31,15 @@ export default class ResultPopup extends PopupBase {
     @property(cc.Button)
     continueButton: cc.Button = null;
 
-    @property(SegmentManager)
-    sg: SegmentManager = null;
+    private _currentState: ResultState;
 
-    private currentState: ResultState;
-
-    onLoad() {
+    protected onLoad() {
         if (this.continueButton) {
             this.continueButton.node.on('click', this.onContinueButtonClicked, this);
         }
     }
 
-    onShow(params?: any[]): void {
+    public onShow(params?: any[]): void {
         super.onShow(params);
         this.updateLabelBasedOnState();
         this.coinsCollectedLabel.string = ScoreManager.getInstance().getScore()+" COINS";
@@ -51,16 +48,16 @@ export default class ResultPopup extends PopupBase {
 
     protected setupPopup(params?: any[]): void {
         if (params.length > 0 && params[0] != null && this.isResultState(params[0])) {
-            this.currentState = params[0];
+            this._currentState = params[0];
         }
     }
 
-    isResultState(value: any): value is ResultState {
+    private isResultState(value: any): value is ResultState {
         return Object.values(ResultState).includes(value);
     }
 
     private updateLabelBasedOnState(): void {
-        switch (this.currentState) {
+        switch (this._currentState) {
             case ResultState.FuelEmpty:
                 this.headerLabel.string = "FUEL EMPTY!";
                 break;
@@ -73,19 +70,18 @@ export default class ResultPopup extends PopupBase {
         }
     }
 
-    onHide(): void {
+    public onHide(): void {
         super.onHide();
     }
 
-    onContinueButtonClicked(): void {
-        this.sg.resetSegments();
-        this.sg.resetBoatPosition();
+    private onContinueButtonClicked(): void {
+       
         PopupManager.getInstance().showPopup(MainPopup);
         AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
         this.onHide();
     }
 
-    onDestroy() {
+    protected onDestroy() {
         if (this.continueButton) {
             this.continueButton.node.off('click', this.onContinueButtonClicked, this);
         }

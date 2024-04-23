@@ -18,7 +18,7 @@ export default class PopupManager extends cc.Component {
         return PopupManager.instance;
     }
 
-    onLoad() {
+    protected onLoad() {
         if (PopupManager.instance) {
             this.node.destroy();
         } else {
@@ -38,11 +38,11 @@ export default class PopupManager extends cc.Component {
     public showPopup<T extends PopupBase>(ctor: { new(): T }, params?: any[]): void {
         const popup = this.getPopupByConstructor(ctor);
         if (popup) {
-            this._popups.forEach(p => {
-                if (p !== popup) {
-                    p.onHide();
-                }
-            });
+            // this._popups.forEach(p => {
+            //     if (p !== popup) {
+            //         p.onHide();
+            //     }
+            // });
             popup.onShow(params);
         } else {
             console.warn(`PopupManager: Popup not found.`);

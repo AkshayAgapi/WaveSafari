@@ -1,9 +1,7 @@
 import { GameConst } from "../Common/GameConstant";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import PlayerData from "../Data/PlayerData";
-import { ResultState } from "../UI/ResultPopup";
 import HUDManager from "./HudManager";
-import PopupManager from "./PopupManager";
 
 const { ccclass, property } = cc._decorator;
 
@@ -26,7 +24,7 @@ export default class FuelController extends cc.Component {
         return FuelController.instance;
     }
 
-    override onLoad() {
+    protected override onLoad() {
 
         if (FuelController.instance) {
             console.error("Another instance of ScoreManager already exists!");
@@ -45,15 +43,15 @@ export default class FuelController extends cc.Component {
         this.fuelConsumptionRate = GameConst.FUEL_CONSUMPTION_RATE * currentBoatSetting.fuelConsumption;
     }
 
-    startEngine() {
+    private startEngine() {
         this.isEngineRunning = true;
     }
 
-    stopEngine() {
+    private stopEngine() {
         this.isEngineRunning = false;
     }
 
-    consumeFuel(dt: number, joystickIntensity: number) {
+    public consumeFuel(dt: number, joystickIntensity: number) {
         // Reduce the fuel consumption rate based on joystick intensity (0 to 1 scale)
         const consumptionModifier = Math.max(0.1, joystickIntensity);  // Ensure there's always some consumption
         const fuelUsed = this.fuelConsumptionRate * consumptionModifier * dt;
@@ -70,7 +68,7 @@ export default class FuelController extends cc.Component {
         }
     }
 
-    refuel(amount: number) {
+    public refuel(amount: number) {
         this.currentFuel += amount;
         this.currentFuel = Math.min(this.currentFuel, this.maxFuel);  // Prevent fuel from exceeding max capacity
         HUDManager.getInstance().setFuel(this.currentFuel);

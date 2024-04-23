@@ -11,16 +11,21 @@ const { ccclass, property } = cc._decorator;
 export default class Boat extends cc.Component {
 
     @property(cc.Node)
-    idleRippleEffect: cc.Node = null;
+    private idleRippleEffect: cc.Node = null;
+
+    @property(cc.Node)
+    private wakeEffect: cc.Node = null;
 
     @property(BoatInputController)
-    inputController: BoatInputController = null;
+    private inputController: BoatInputController = null;
 
-    onLoad() {
+    protected onLoad() {
 
         let physics_manager = cc.director.getPhysicsManager()
         physics_manager.enabled = true;
         physics_manager.gravity = cc.v2 (0, 0);
+
+        console.log("initial Rotation : "+this.node.rotation);
 
         // Register collision event listener
         cc.director.getCollisionManager().enabled = true; // Enable collision detection
@@ -31,7 +36,7 @@ export default class Boat extends cc.Component {
         cc.director.getCollisionManager().on('collision-exit', this.onCollisionExit, this);
     }
 
-    update(dt: number) {
+    protected update(dt: number) {
         // Assuming 'currentVelocity' is updated elsewhere in your code
         // Check if velocity is approximately zero
         if (this.inputController.isIdle) {
@@ -47,8 +52,7 @@ export default class Boat extends cc.Component {
         }
     }
 
-    onCollisionEnter(other: cc.Collider, self: cc.Collider) {
-        console.log("collision : "+other.name);
+    protected onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         let collectable = other.getComponent(Collectable);
     
         if (collectable) {
@@ -68,13 +72,33 @@ export default class Boat extends cc.Component {
         }
     }
 
-    onCollisionExit(event: cc.Event.EventCustom) {
+    protected onCollisionExit(event: cc.Event.EventCustom) {
         
     }
 
-    onDestroy() {
+    protected onDestroy() {
         // Unregister collision event listener
         cc.director.getCollisionManager().off('collision-enter', this.onCollisionEnter, this);
         cc.director.getCollisionManager().off('collision-exit', this.onCollisionExit, this);
+    }
+
+    private onWakeEffect() : void{
+        this.wakeEffect.active = true;
+    }
+
+    private offWakeEffect() : void{
+        this.wakeEffect.active = false;
+    }
+
+    public resetPoisition(): void{
+        this.inputController.resetting = true;
+        this.offWakeEffect();
+        this.inputController.disableControl();
+        this.node.setPosition(0, 0);
+        this.node.angle = 90;
+        this.onWakeEffect();
+        this.scheduleOnce(() => {
+            this.inputController.enableControl();
+        }, 0.1);    
     }
 }

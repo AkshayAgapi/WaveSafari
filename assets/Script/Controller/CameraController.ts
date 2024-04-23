@@ -18,17 +18,18 @@ export default class CameraController extends cc.Component {
     protected onLoad(): void {
         GameEvents.on(GameEventNames.GameCinematicTutorialStart, this.HandleOnCinematicTutorialStart);
         GameEvents.on(GameEventNames.GameCinematicTutorialDone, this.HandleOnCinematicTutorialEnd);
+        GameEvents.on(GameEventNames.GameSplashZoomFirstTimeStart, this.HandleOnGameSplashZoomFirstTimeStart);
         GameEvents.on(GameEventNames.GameSplashZoomStart, this.HandleOnGameSplashZoomStart);
     }
 
     protected onDestroy(): void {
         GameEvents.off(GameEventNames.GameCinematicTutorialStart, this.HandleOnCinematicTutorialStart);
         GameEvents.off(GameEventNames.GameCinematicTutorialDone, this.HandleOnCinematicTutorialEnd);
-        GameEvents.on(GameEventNames.GameSplashZoomStart, this.HandleOnGameSplashZoomStart);
+        GameEvents.off(GameEventNames.GameSplashZoomFirstTimeStart, this.HandleOnGameSplashZoomFirstTimeStart);
+        GameEvents.off(GameEventNames.GameSplashZoomStart, this.HandleOnGameSplashZoomStart);
     }
 
     private HandleOnCinematicTutorialStart = () => {
-        console.log("Zoom Started");
         this.zoomOut();
     };
 
@@ -36,9 +37,13 @@ export default class CameraController extends cc.Component {
         this.zoomIn();
     };
 
-    private HandleOnGameSplashZoomStart = () => {
-        this.zoomOutSlowly();
+    private HandleOnGameSplashZoomFirstTimeStart = () => {
+        this.zoomOutSlowly(6, 0.6);
     };
+
+    HandleOnGameSplashZoomStart = () => {
+        this.zoomOutSlowly(3, 0.7);
+    }
 
     protected start(): void {
         this.boundaryRect = GameConst.BOUNDARY_RECT;
@@ -67,23 +72,25 @@ export default class CameraController extends cc.Component {
     }
 
     private zoomIn(): void {
+        console.log("zoomIn");
+
         cc.tween(this.cameraComponent)
         .to(1, { zoomRatio: 0.7 })
-        .call(() => console.log("Zoom in completed"))
         .start();
     }
 
     private zoomOut(): void {
+        console.log("zoomOut");
+
         cc.tween(this.cameraComponent)
         .to(1, { zoomRatio: 0.6 })
-        .call(() => console.log("Zoom out completed"))
         .start();
     }
 
-    private zoomOutSlowly(): void {
+    private zoomOutSlowly(time: number, zoomRatio: number): void {
+        console.log("zoomOutSlowly");
         cc.tween(this.cameraComponent)
-        .to(6, { zoomRatio: 0.6 }, { easing: 'quadInOut' })
-        .call(() => console.log("Zoom out slowly completed"))
+        .to(time, { zoomRatio: zoomRatio }, { easing: 'quadInOut' })
         .start();
     }
 }

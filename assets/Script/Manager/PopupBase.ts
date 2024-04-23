@@ -21,13 +21,13 @@ export abstract class PopupBase extends cc.Component {
         this.hidePopupTween();
     }
 
-    initPopup() {
+    private initPopup() {
         this.popupCard.scale = 0;
         this.background.opacity = 0; 
         this.showPopupTween();
     }
 
-    showPopupTween() {
+    private showPopupTween() {
         // Tween for the background fade-in
         cc.tween(this.background)
             .to(0.3, { opacity: 148 })
@@ -40,7 +40,7 @@ export abstract class PopupBase extends cc.Component {
             .start();
     }
 
-    hidePopupTween() {
+    private hidePopupTween() {
         // Tween for the popup card scale animation
         cc.tween(this.popupCard)
             .to(0.05, { scale: 1.1 }, { easing: 'quadIn' }) // Slightly scale up before hiding
@@ -57,7 +57,7 @@ export abstract class PopupBase extends cc.Component {
             .start();
     }
 
-    onAnimationComplete() {
+    private onAnimationComplete() {
         this.node.active = false; 
     }
 }
