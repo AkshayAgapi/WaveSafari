@@ -6,17 +6,17 @@ interface ICollectable {
 
 @ccclass
 export abstract class Collectable extends cc.Component implements ICollectable {
-    private camera: cc.Camera = null;
+    private _camera: cc.Camera = null;
 
     protected start(): void {
-        this.camera = cc.Camera.main;
+        this._camera = cc.Camera.main;
     }
 
     abstract collect(): void;
 
     protected showCollectableAnimation() : void
     {
-        let viewportTopLeft = this.camera.getScreenToWorldPoint(cc.v2(0, cc.winSize.height));
+        let viewportTopLeft = this._camera.getScreenToWorldPoint(cc.v2(0, cc.winSize.height));
         let endPos = this.node.parent.convertToNodeSpaceAR(viewportTopLeft);
 
         // Move the coin using a tween to the calculated position

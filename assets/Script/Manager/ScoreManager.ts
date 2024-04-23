@@ -7,23 +7,23 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class ScoreManager extends cc.Component  {
 
-    private score: number = 0;
+    private _score: number = 0;
     
-    private static instance: ScoreManager;
+    private static _instance: ScoreManager;
 
     public static getInstance(): ScoreManager {
-        if (!ScoreManager.instance) {
-            return ScoreManager.instance;
+        if (!ScoreManager._instance) {
+            return ScoreManager._instance;
             
         }
-        return ScoreManager.instance;
+        return ScoreManager._instance;
     }
 
     protected onLoad(): void {
-        if (ScoreManager.instance) {
+        if (ScoreManager._instance) {
             this.node.destroy(); 
         } else {
-            ScoreManager.instance = this;
+            ScoreManager._instance = this;
             cc.game.addPersistRootNode(this.node);
         }
 
@@ -31,20 +31,20 @@ export default class ScoreManager extends cc.Component  {
     }
 
     private HandleOnGameEnd = () => {
-        PlayerData.saveTotalCoins(this.score);
+        PlayerData.saveTotalCoins(this._score);
     };
 
     public addScore(value: number): void {
-        this.score += value;
-        HUDManager.getInstance().setCoins(this.score);
+        this._score += value;
+        HUDManager.getInstance().setCoins(this._score);
     }
 
     public getScore(): number {
-        return this.score;
+        return this._score;
     }
 
     public resetScore(): void{
-        this.score = 0;
+        this._score = 0;
     }
 
     protected onDestroy(): void {

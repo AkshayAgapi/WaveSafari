@@ -46,23 +46,23 @@ export default class HUDManager extends cc.Component{
     @property(cc.SpriteFrame)
     muteIcon: cc.SpriteFrame = null;
 
-    private static instance: HUDManager;
+    private static _instance: HUDManager;
 
     public static getInstance(): HUDManager {
-        if (!HUDManager.instance) {
-            return HUDManager.instance;
+        if (!HUDManager._instance) {
+            return HUDManager._instance;
             
         }
-        return HUDManager.instance;
+        return HUDManager._instance;
     }
 
     // Initialize HUD values
     onLoad() {
 
-        if (HUDManager.instance) {
+        if (HUDManager._instance) {
             this.node.destroy();
         } else {
-            HUDManager.instance = this;
+            HUDManager._instance = this;
             //cc.game.addPersistRootNode(this.node); 
         }
 

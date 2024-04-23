@@ -17,7 +17,7 @@ export default class Joystick extends cc.Component {
 
     private isOn : boolean = false;
 
-    onLoad() {
+    protected onLoad() {
         this.node.on(cc.Node.EventType.TOUCH_START, this.Joystick_Touch_Start, this);
         this.node.on(cc.Node.EventType.TOUCH_MOVE, this.Joystick_Touch_Move, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.Joystick_Touch_End, this);

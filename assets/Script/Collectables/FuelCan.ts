@@ -8,8 +8,7 @@ const {ccclass, property} = cc._decorator;
 class FuelCan extends Collectable {
 
     public collect(): void {
-        GameManager.getInstance().boat.getComponent(FuelController)
-        FuelController.getInstance().refuel(100);
+        GameManager.getInstance().boat.getComponent(FuelController).refuel(100);
         this.showCollectableAnimation();
         AudioManager.getInstance().playSfx(SoundClipType.FUEL_COLLECTION_SFX);
     }

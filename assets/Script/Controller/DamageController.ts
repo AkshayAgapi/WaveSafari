@@ -11,33 +11,33 @@ export default class DamageController extends cc.Component {
     @property
     damageInterval: number = 2.0; // Time in seconds between possible damage events
 
-    private lastDamageTime: number = 0; // Timestamp of the last damage event
-    private totalDamage: number = 0;
-    private damagePerCollide: number = 10;
+    private _lastDamageTime: number = 0; // Timestamp of the last damage event
+    private _totalDamage: number = 0;
+    private _damagePerCollide: number = 10;
 
     protected onLoad() {
         this.resetDamageTimer();
     }
     
     public getTotalDamage() : number{
-        return this.totalDamage;
+        return this._totalDamage;
     }
 
     // Call this method when the boat collides with a damage-causing obstacle
     public applyDamage() {
         const currentTime = Date.now();
-        if (currentTime - this.lastDamageTime > this.damageInterval * 1000) {
-            this.lastDamageTime = currentTime;
+        if (currentTime - this._lastDamageTime > this.damageInterval * 1000) {
+            this._lastDamageTime = currentTime;
             this.handleDamage();
         }
     }
 
     private handleDamage() {
-        this.totalDamage += this.damagePerCollide;
-        HUDManager.getInstance().setDamage(this.totalDamage);
+        this._totalDamage += this._damagePerCollide;
+        HUDManager.getInstance().setDamage(this._totalDamage);
         AudioManager.getInstance().playSfx(SoundClipType.COLLISION_SFX);
 
-        if(this.totalDamage > 100)
+        if(this._totalDamage > 100)
         {
             PopupManager.getInstance().showPopup(ResultPopup, [ResultState.FullDamage])
             GameEvents.dispatchEvent(GameEventNames.GameEnd);
@@ -45,6 +45,6 @@ export default class DamageController extends cc.Component {
     }
 
     private resetDamageTimer() {
-        this.lastDamageTime = Date.now() - this.damageInterval * 1000;
+        this._lastDamageTime = Date.now() - this.damageInterval * 1000;
     }
 }

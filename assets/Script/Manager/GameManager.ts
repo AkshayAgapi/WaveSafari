@@ -32,19 +32,19 @@ export default class GameManager extends cc.Component {
     public fuelController : FuelController = null;
     public damageController : DamageController = null;
 
-    private isGamePaused: boolean = false;
-    private static instance: GameManager;
+    private _isGamePaused: boolean = false;
+    private static _instance: GameManager;
 
     public static getInstance(): GameManager {
-        return GameManager.instance;
+        return GameManager._instance;
     }
 
     protected onLoad() {
 
-        if (GameManager.instance) {
+        if (GameManager._instance) {
             this.node.destroy();
         } else {
-            GameManager.instance = this;
+            GameManager._instance = this;
         }
 
         this.initGame();
@@ -129,18 +129,18 @@ export default class GameManager extends cc.Component {
     }
 
     public pauseGame(): void {
-        if (!this.isGamePaused) {
+        if (!this._isGamePaused) {
             AudioManager.getInstance().pauseAllSounds();
             cc.director.pause();
-            this.isGamePaused = true;
+            this._isGamePaused = true;
         }
     }
 
     public resumeGame(): void {
-        if (this.isGamePaused) {
+        if (this._isGamePaused) {
             AudioManager.getInstance().pauseAllSounds();
             cc.director.resume();
-            this.isGamePaused = false;
+            this._isGamePaused = false;
         }
     }
 

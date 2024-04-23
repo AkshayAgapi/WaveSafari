@@ -9,20 +9,20 @@ export default class PopupManager extends cc.Component {
     popupPrefabs: PopupBase[] = [];
 
     private _popups: Map<string, PopupBase> = new Map();
-    private static instance: PopupManager;
+    private static _instance: PopupManager;
 
     public static getInstance(): PopupManager {
-        if (!PopupManager.instance) {
-            PopupManager.instance = new PopupManager();
+        if (!PopupManager._instance) {
+            PopupManager._instance = new PopupManager();
         }
-        return PopupManager.instance;
+        return PopupManager._instance;
     }
 
     protected onLoad() {
-        if (PopupManager.instance) {
+        if (PopupManager._instance) {
             this.node.destroy();
         } else {
-            PopupManager.instance = this;
+            PopupManager._instance = this;
             cc.game.addPersistRootNode(this.node); // Make this node persistent
             this.registerAllPopups();
         }
