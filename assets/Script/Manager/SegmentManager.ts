@@ -47,11 +47,10 @@ export default class SegmentManager extends cc.Component {
     segmentParent: cc.Node = null;
 
     @property
-    initialSegmentsCount: number = 5;
-
-    @property
     segmentHeight: number = 200;
 
+    private _initialSegmentsCount: number = 3;
+    private _index : number = 0;
     private _currentSegments: cc.Node[] = [];
     private _segmentData: { segments: SegmentData[] } = { segments: [] };
 
@@ -63,7 +62,7 @@ export default class SegmentManager extends cc.Component {
     private loadSegmentData() {
 
         var jsonPath = "";
-        if(PlayerData.isFirstTime()){
+        if(!PlayerData.isFirstTime()){
             jsonPath = "Data/FirstTimeSegmentData";
         }else{
             jsonPath = "Data/SegmentData";
@@ -82,10 +81,11 @@ export default class SegmentManager extends cc.Component {
 
     private createInitialSegments(): void {
         let startPosY: number = 0;
-        for (let i = 0; i < this.initialSegmentsCount; i++) {
+        for (let i = 0; i < this._initialSegmentsCount; i++) {
             this.addSegment(startPosY, i);
             startPosY += this.segmentHeight;
         }
+        this._index = this._initialSegmentsCount;
     }
 
     private addSegment(yPosition: number, segmentIndex: number): void {
@@ -93,16 +93,23 @@ export default class SegmentManager extends cc.Component {
         const newSegment: cc.Node = cc.instantiate(this.segmentPrefab);
         newSegment.setParent(this.segmentParent);
         newSegment.setPosition(cc.v2(0, yPosition));
-    
+        newSegment.setSiblingIndex(0);
+
+        this.addObstablesAndCollectables(segmentInfo, newSegment);
+        this._currentSegments.push(newSegment);
+    }
+
+
+    private addObstablesAndCollectables(segmentInfo: SegmentData, parent: cc.Node){
         segmentInfo.items.forEach((item: SegmentItem) => {
             const prefab: cc.Prefab = this.getPrefabForItemType(item.type);
      
             if (prefab) {
                 const newItem: cc.Node = cc.instantiate(prefab);
                 newItem.name = item.type.toString();
-                newItem.setParent(newSegment);
+                newItem.setParent(parent);
                 newItem.setPosition(cc.v3(item.position.x, item.position.y));
-                
+
                 var collectable = newItem.getComponent(Collectable);
                 if(collectable){
                     newItem.zIndex = 2;
@@ -140,17 +147,8 @@ export default class SegmentManager extends cc.Component {
                 }
             }
         });
-    
-        this._currentSegments.push(newSegment);
     }
-
-    public resetSegments(): void {
-        this._currentSegments.forEach(segment => segment.destroy());
-        this._currentSegments = [];
-        let startPosY: number = 0;
-        this.loadSegmentData();
-    }
-    
+        
 
     private getPrefabForItemType(type: string): cc.Prefab {
         switch (type) {
@@ -174,7 +172,7 @@ export default class SegmentManager extends cc.Component {
     protected update(dt: number): void {
 
         if (this._currentSegments.length > 0) {
-            let cameraPosY: number = this.target.position.y; // or this.target.position.y for player's Y position
+            let cameraPosY: number = this.target.position.y; 
             let lastSegment = this._currentSegments[this._currentSegments.length - 1];
             let halfwayY = lastSegment.position.y;
         
@@ -182,12 +180,35 @@ export default class SegmentManager extends cc.Component {
             if (cameraPosY > halfwayY) {
                 let newPosY = lastSegment.position.y + this.segmentHeight; // Position for the recycled segment
                 let segmentToRecycle = this._currentSegments.shift(); // Remove the first segment
+                this.clearSegmentExceptWaves(segmentToRecycle); // Clear all children except for the Waves node
+
                 segmentToRecycle.setPosition(0, newPosY); // Reposition it to the top
+                const segmentInfo: SegmentData = this._segmentData.segments[this._index % this._segmentData.segments.length];
+                this.addObstablesAndCollectables(segmentInfo, segmentToRecycle);
+                segmentToRecycle.setSiblingIndex(0);
                 this._currentSegments.push(segmentToRecycle); // Add it back to the array as the last element
+                this._index++;
             }
         } else {
             // Handle the case where there are no segments (e.g., log a warning or initialize segments)
             console.warn("No segments available in currentSegments array.");
         }       
+    }
+
+    private clearSegmentExceptWaves(segment: cc.Node): void {
+        // Iterate through all children and remove them except for the 'Waves' node
+        let children = segment.children.slice(); // Create a copy of the children array to modify it while iterating
+        for (let child of children) {
+            if (child.name !== "Waves") {
+                child.destroy(); // Destroy the child node if it is not the 'Waves' node
+            }
+        }
+    }
+
+    public resetSegments(): void {
+        this._currentSegments.forEach(segment => segment.destroy());
+        this._currentSegments = [];
+        let startPosY: number = 0;
+        this.loadSegmentData();
     }
 }

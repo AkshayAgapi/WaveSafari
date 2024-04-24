@@ -63,6 +63,7 @@ export default class Boat extends cc.Component {
                 switch(obstacleCollider.GetObstacleColliderType()) {
                     case ObstacleColliderType.FinsihLine:
                         PopupManager.getInstance().showPopup(ResultPopup, [ResultState.FirstSafariDone]);
+                        GameEvents.dispatchEvent(GameEventNames.GameEnd);
                         break;
                     case ObstacleColliderType.Island:
                         this.getComponent(DamageController).applyDamage();

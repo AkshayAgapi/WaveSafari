@@ -75,6 +75,9 @@ export default class GameManager extends cc.Component {
         HUDManager.getInstance().setFuel(0);
         ScoreManager.getInstance().resetScore();
 
+        // if(this.damageController != null){
+        //     this.damageController.
+        // }
         if(this.fuelController != null){
             this.fuelController.refuel(100);
         }
@@ -94,8 +97,7 @@ export default class GameManager extends cc.Component {
 
     private checkFirstTimeUser() {
         var isFirstTime = PlayerData.isFirstTime();
-        if (true) {
-                //disable the joystick input
+        if (false) {
             GameEvents.dispatchEvent(GameEventNames.GameSplashZoomFirstTimeStart);
         
             this.scheduleOnce(() => {

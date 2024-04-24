@@ -52,23 +52,18 @@ export default class CameraController extends cc.Component {
     protected update(dt: number): void {
         if (!this.target) return;
 
-        // Calculate the camera's horizontal boundaries with offsets
+        const smoothTime = 0.2;  // Time to smooth camera movement
         let minX = this._boundaryRect.xMin + this.offsetX;
         let maxX = this._boundaryRect.xMax - this.offsetX;
-
-        // Get the target's position in the world space
+    
         let targetWorldPos = this.target.convertToWorldSpaceAR(cc.Vec2.ZERO);
-        // Convert target's world position to the node (camera's parent) local space
         let targetLocalPos = this.node.parent.convertToNodeSpaceAR(targetWorldPos);
-
-        // Clamp target's X position to keep within horizontal boundaries
+    
         let clampedX = cc.misc.clampf(targetLocalPos.x, minX, maxX);
-
-        // Y position follows the target directly, allowing free vertical movement
         let newY = targetLocalPos.y;
-
-        // Update the camera's position
-        this.node.position = new cc.Vec2(clampedX, newY);
+    
+        // Smoothly interpolate the camera's position
+        this.node.position = this.node.position.lerp(new cc.Vec2(clampedX, newY), dt / smoothTime);
     }
 
     private zoomIn(): void {

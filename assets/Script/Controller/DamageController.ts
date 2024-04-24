@@ -1,3 +1,4 @@
+import { GameConst } from "../Common/GameConstant";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import AudioManager, { SoundClipType } from "../Manager/AudioManager";
 import HUDManager from "../Manager/HudManager";
@@ -13,7 +14,6 @@ export default class DamageController extends cc.Component {
 
     private _lastDamageTime: number = 0; // Timestamp of the last damage event
     private _totalDamage: number = 0;
-    private _damagePerCollide: number = 10;
 
     protected onLoad() {
         this.resetDamageTimer();
@@ -33,7 +33,7 @@ export default class DamageController extends cc.Component {
     }
 
     private handleDamage() {
-        this._totalDamage += this._damagePerCollide;
+        this._totalDamage += GameConst.DAMAGE_PER_COLLIDE;
         HUDManager.getInstance().setDamage(this._totalDamage);
         AudioManager.getInstance().playSfx(SoundClipType.COLLISION_SFX);
 

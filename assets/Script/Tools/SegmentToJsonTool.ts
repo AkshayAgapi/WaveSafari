@@ -1,51 +1,54 @@
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class SegmentToJsonTool extends cc.Component {
-
-    @property(cc.Node)
-    segmentNode: cc.Node = null; // Assign your segment prefab instance here
+export default class SegmentsToJsonTool extends cc.Component {
+    @property([cc.Node])
+    segmentNodes: cc.Node[] = []; // Array of segment nodes
 
     protected start() {
-        this.generateSegmentJSON();
+        this.generateSegmentsJSON();
     }
 
-    private generateSegmentJSON() {
-        let segmentData = {
-            items: []
+    private generateSegmentsJSON() {
+        let segmentsData = {
+            segments: []
         };
 
-        this.segmentNode.children.forEach(child => {
-            // Determine the type based on the node name or tag
-            let type = "";
-            if (child.name.indexOf("Obstacle") === 0) {
-                type = "obstacle";
-            } else if (child.name.indexOf("Gem") === 0) {
-                type = "gem";
-            } else if (child.name.indexOf("Island1") === 0) {
-                type = "island1";
-            } else if (child.name.indexOf("Island2") === 0) {
-                type = "island2";
-            } else if (child.name.indexOf("FuelCan") === 0) {
-                type = "fuelCan";
-            } else if (child.name.indexOf("FinishLine") === 0) {
-                type = "finishLine";
-            }
+        this.segmentNodes.forEach((segmentNode, index) => {
+            let segmentData = {
+                id: index + 1, // Assuming ID is index + 1 for uniqueness
+                items: []
+            };
 
-            // Add item to segment data with position, scale, and rotation
-            if (type) {
-                segmentData.items.push({
-                    type: type,
-                    position: { x: child.position.x, y: child.position.y },
-                    scale: { x: child.scaleX, y: child.scaleY },
-                    rotation: child.angle, // For Cocos Creator 3.x, use child.angle for 2D rotation
-                    anchor: child.getAnchorPoint(),
-                    size: child.getContentSize()
-                });
-            }
+            segmentNode.children.forEach(child => {
+                // Determine the type based on the node name or tag
+                let type = this.determineType(child.name);
+                if (type) {
+                    segmentData.items.push({
+                        type: type,
+                        position: { x: child.position.x, y: child.position.y },
+                        scale: { x: child.scaleX, y: child.scaleY },
+                        rotation: child.angle,
+                        anchor: child.getAnchorPoint(),
+                        size: { width: child.width, height: child.height }
+                    });
+                }
+            });
+
+            segmentsData.segments.push(segmentData);
         });
 
         // Log or export the JSON string
-        console.log(JSON.stringify(segmentData, null, 4)); // Pretty print JSON
+        console.log(JSON.stringify(segmentsData, null, 4)); // Pretty print JSON
+    }
+
+    private determineType(name: string): string | null {
+        if (name.includes("Obstacle")) return "obstacle";
+        if (name.includes("Gem")) return "gem";
+        if (name.includes("Island1")) return "island1";
+        if (name.includes("Island2")) return "island2";
+        if (name.includes("FuelCan")) return "fuelCan";
+        if (name.includes("FinishLine")) return "finishLine";
+        return null;
     }
 }
