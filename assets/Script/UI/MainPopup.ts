@@ -2,8 +2,8 @@ import { BoatUpgrade } from "../Data/BoatUpgradeData";
 import PlayerData from "../Data/PlayerData";
 import AudioManager, { SoundClipType } from "../Manager/AudioManager";
 import GameManager from "../Manager/GameManager";
-import { PopupBase } from "../Manager/PopupBase";
 import PopupManager from "../Manager/PopupManager";
+import { PopupBase } from "./Base/PopupBase";
 import BoatSettingCard from "./BoatSettingCard";
 import BoatUpgradePopup from "./BoatUpgradePopup";
 
@@ -53,12 +53,12 @@ export default class MainPopup extends PopupBase {
     private onPlayButtonClicked(): void {
 
         if(PlayerData.isBoatSettingUnlocked(this._selectedCard.cardId)){
-            GameManager.getInstance().restartGame();
-            AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+            GameManager.Instance().restartGame();
+            AudioManager.Instance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
             this.onHide();
         }
         else{
-            PopupManager.getInstance().showPopup(BoatUpgradePopup, [this._selectedCard.upgradeData, this.onPurchaseSuccess]);
+            PopupManager.Instance().showPopup(BoatUpgradePopup, [this._selectedCard.upgradeData, this.onPurchaseSuccess()]);
         }
     }
 
@@ -108,11 +108,11 @@ export default class MainPopup extends PopupBase {
         this._selectedCard = card;
         this._selectedCard.select();
 
-        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+        AudioManager.Instance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
 
         if(card.isCardLocked)
         {
-            PopupManager.getInstance().showPopup(BoatUpgradePopup, [card.upgradeData, this.onPurchaseSuccess]);
+            PopupManager.Instance().showPopup(BoatUpgradePopup, [card.upgradeData, this.onPurchaseSuccess]);
         }
     }
 

@@ -1,3 +1,5 @@
+import { GenericSingleton } from "../Common/GenericSingleton";
+
 const {ccclass, property} = cc._decorator;
 
 export enum SoundClipType {
@@ -10,7 +12,7 @@ export enum SoundClipType {
 }
 
 @ccclass
-export default class AudioManager extends cc.Component{
+export default class AudioManager extends GenericSingleton<AudioManager>{
 
     _forceBGMDisable: boolean = false;
 
@@ -45,12 +47,6 @@ export default class AudioManager extends cc.Component{
     private _bgmEnabled: boolean = true;
     private _sfxEnabled: boolean = true;
 
-    private static _instance: AudioManager;
-
-    public static getInstance(): AudioManager {
-        return AudioManager._instance;
-    }
-
     public toggleAudio() : Boolean {
         this._isMuted = !this._isMuted;
         this.toggleSfx();
@@ -61,12 +57,7 @@ export default class AudioManager extends cc.Component{
 
     protected onLoad(): void {
 
-        if (AudioManager._instance) {
-            this.node.destroy();
-        } else {
-            AudioManager._instance = this;
-        }
-
+        super.onLoad();
         this.playWaveSfx();
     }
 
@@ -167,12 +158,12 @@ export default class AudioManager extends cc.Component{
     public resumeAllSounds()
     {
         if(this._sfxEnabled){
-            this.sfxAudioSource.pause();
-            this.sfxWaveAudioSource.pause();
+            this.sfxAudioSource.resume();
+            this.sfxWaveAudioSource.resume();
         }
 
         if(this._bgmEnabled){
-            this.bgmAudioSource.pause();
+            this.bgmAudioSource.resume();
         }
     }
 }

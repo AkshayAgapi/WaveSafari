@@ -38,11 +38,11 @@ export default class CameraController extends cc.Component {
     };
 
     private handleOnGameSplashZoomFirstTimeStart = () => {
-        this.zoomOutSlowly(6, 0.6);
+        this.zoomOutSlowly(6, 0.4);
     };
 
     private handleOnGameSplashZoomStart = () => {
-        this.zoomOutSlowly(3, 0.7);
+        this.zoomOutSlowly(3, 0.5);
     }
 
     protected start(): void {
@@ -68,13 +68,13 @@ export default class CameraController extends cc.Component {
 
     private zoomIn(): void {
         cc.tween(this.cameraComponent)
-        .to(1, { zoomRatio: 0.7 })
+        .to(1, { zoomRatio: 0.5})
         .start();
     }
 
     private zoomOut(): void {
         cc.tween(this.cameraComponent)
-        .to(1, { zoomRatio: 0.6 })
+        .to(1, { zoomRatio: 0.4 })
         .start();
     }
 

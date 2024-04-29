@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "WaterSegment-2",
+    "_name": "WaterSegment-2-firstTime",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -57,7 +57,7 @@
         "__id__": 59
       }
     ],
-    "_active": true,
+    "_active": false,
     "_level": 2,
     "_components": [
       {
@@ -265,7 +265,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "1de4C4PU1GlZdOOQJ9ekyW",
+    "fileId": "95IQ/PkC5Ka7dPpNsAQftB",
     "sync": false
   },
   {
@@ -421,7 +421,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "e39Dt0a0dDfJ/sprawlc/v",
+    "fileId": "85xyaMiCVAH4r2oHlLIU23",
     "sync": false
   },
   {
@@ -577,7 +577,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "f7jEApAPNLKZK2/vmxB1bo",
+    "fileId": "0biAYyWO5LdL1zAZA8bxbb",
     "sync": false
   },
   {
@@ -733,7 +733,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "f8nMC5L3lMTITPn/QAZW09",
+    "fileId": "achjWSxptJkpql2FA9FUPx",
     "sync": false
   },
   {
@@ -889,7 +889,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "245NulCiBOcLf4sOKO1lHx",
+    "fileId": "82E1NA6fNEubp+vOfIDEbE",
     "sync": false
   },
   {
@@ -1045,7 +1045,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "49CaI0KKxF8J0Xwy173oEb",
+    "fileId": "965FCkNW9I1bEqXZkuhlmh",
     "sync": false
   },
   {
@@ -1201,7 +1201,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "b138K94hZHUY605sUnoKiC",
+    "fileId": "9asOx6ML1GuLLIxKLk9B5q",
     "sync": false
   },
   {
@@ -1357,7 +1357,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "e5f47/851GEYFvwF6iuqZr",
+    "fileId": "5d4+69wLlEBZQ5nJSN3hqi",
     "sync": false
   },
   {
@@ -1513,7 +1513,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "00SaAA+ktOdKvJUoY1z06L",
+    "fileId": "0d5i/Hp2BFpZln3qOLrOz9",
     "sync": false
   },
   {
@@ -1616,7 +1616,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "f9PS6KVLlPrpb37VtMxk7y",
+    "fileId": "60SROT8kFCNJ6CPIQAmBWd",
     "sync": false
   },
   {
@@ -1733,7 +1733,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "54UJK0/pdNbo4U9WQUXuGG",
+    "fileId": "88voz4jcJFfp6MrtK9cjY2",
     "sync": false
   },
   {
@@ -1775,13 +1775,13 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5311808280037477,
-      "y": 0.5074493589852368
+      "x": 0.5024012129640562,
+      "y": 0.5010857031601441
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 877.65,
-      "y": -460.957,
+      "x": -664.925,
+      "y": 727.656,
       "z": 0
     },
     "_scale": {
@@ -1794,12 +1794,12 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": -80.88999999999999
+      "z": 103.968
     },
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "groupIndex": 2,
+    "groupIndex": 0,
     "_id": ""
   },
   {
@@ -1970,7 +1970,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "97zhwHAA9GWazp2l7rOzk3",
+    "fileId": "88vtmF1LxOzpuMOeD9jG81",
     "sync": false
   },
   {
@@ -2012,31 +2012,31 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.42505749281216215,
-      "y": 0.4788038823506483
+      "x": 0.5,
+      "y": 0.5
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -569.403,
-      "y": -589.593,
+      "x": 1270.634,
+      "y": 974.617,
       "z": 0
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.55,
-      "y": 0.55,
+      "x": 1,
+      "y": 1,
       "z": 1
     },
     "_eulerAngles": {
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": -92.057
+      "z": -2
     },
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "groupIndex": 2,
+    "groupIndex": 0,
     "_id": ""
   },
   {
@@ -2237,7 +2237,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "a4bYUTlh9MJLPqGYiTcu3h",
+    "fileId": "6eum7YwJ1JLr62poSNIKkQ",
     "sync": false
   },
   {
@@ -2280,9 +2280,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "segmentNode": {
-      "__id__": 1
-    },
+    "segmentNodes": [],
     "_id": ""
   },
   {
@@ -2293,7 +2291,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "74fRe6eqxII5tYS3Igv6PM",
+    "fileId": "05QNBFer5J8bdSM0YeMN3u",
     "sync": false
   }
 ]

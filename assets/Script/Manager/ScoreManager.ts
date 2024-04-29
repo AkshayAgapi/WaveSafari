@@ -24,7 +24,6 @@ export default class ScoreManager extends cc.Component  {
             this.node.destroy(); 
         } else {
             ScoreManager._instance = this;
-            cc.game.addPersistRootNode(this.node);
         }
 
         GameEvents.on(GameEventNames.GameEnd, this.HandleOnGameEnd);
@@ -36,7 +35,7 @@ export default class ScoreManager extends cc.Component  {
 
     public addScore(value: number): void {
         this._score += value;
-        HUDManager.getInstance().setCoins(this._score);
+        HUDManager.Instance().setCoins(this._score);
     }
 
     public getScore(): number {

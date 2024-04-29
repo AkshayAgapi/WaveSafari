@@ -1,5 +1,5 @@
 import AudioManager, { SoundClipType } from "../Manager/AudioManager";
-import { PopupBase } from "../Manager/PopupBase";
+import { PopupBase } from "./Base/PopupBase";
 
 const {ccclass, property} = cc._decorator;
 
@@ -52,7 +52,7 @@ export default class CommonPopup extends PopupBase {
     }
 
     private onOkButtonCliked(): void {
-        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+        AudioManager.Instance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
         this._btnActionCallback();
         this.onHide();
     }

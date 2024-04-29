@@ -1,8 +1,8 @@
 import { BoatUpgrade } from "../Data/BoatUpgradeData";
 import PlayerData from "../Data/PlayerData";
 import AudioManager, { SoundClipType } from "../Manager/AudioManager";
-import { PopupBase } from "../Manager/PopupBase";
 import PopupManager from "../Manager/PopupManager";
+import { PopupBase } from "./Base/PopupBase";
 import CommonPopup from "./CommonPopup";
 
 const {ccclass, property} = cc._decorator;
@@ -58,7 +58,7 @@ export default class BoatUpgradePopup extends PopupBase {
     }
 
     private onUpgradeButtonCliked(): void {
-        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+        AudioManager.Instance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
 
         if(PlayerData.getTotalCoins() >= this.boatUpgradeData.cost){
             PlayerData.purchaseBoatUpgrade(this.boatUpgradeData.id);
@@ -66,7 +66,7 @@ export default class BoatUpgradePopup extends PopupBase {
             this._purchaseCallback();
         }
         else{
-            PopupManager.getInstance().showPopup(CommonPopup,["You don't have enough coins to upgrade!", "Okay",this.onPopupActionCallback ]);
+            PopupManager.Instance().showPopup(CommonPopup,["You don't have enough coins to upgrade!", "Okay",this.onPopupActionCallback ]);
         }
 
        this.onHide();
@@ -78,7 +78,7 @@ export default class BoatUpgradePopup extends PopupBase {
     }
 
     private onCloseButtonCliked(): void {
-        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+        AudioManager.Instance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
        this.onHide();
     }
 }

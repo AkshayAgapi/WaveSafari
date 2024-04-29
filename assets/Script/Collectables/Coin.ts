@@ -1,7 +1,5 @@
 import AudioManager, { SoundClipType } from "../Manager/AudioManager";
-import PopupManager from "../Manager/PopupManager";
 import ScoreManager from "../Manager/ScoreManager";
-import MainPopup from "../UI/MainPopup";
 import { Collectable } from "./Collectable";
 const {ccclass, property} = cc._decorator;
 
@@ -13,6 +11,6 @@ class Coin extends Collectable {
     public collect(): void {
         ScoreManager.getInstance().addScore(this.value);
         this.showCollectableAnimation();
-        AudioManager.getInstance().playSfx(SoundClipType.COIN_COLLECTION_SFX);
+        AudioManager.Instance().playSfx(SoundClipType.COIN_COLLECTION_SFX);
     }
 }

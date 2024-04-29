@@ -1,11 +1,9 @@
 import DamageController from "../Controller/DamageController";
 import AudioManager, { SoundClipType } from "../Manager/AudioManager";
-import FuelController from "../Manager/FuelController";
 import GameManager from "../Manager/GameManager";
-import { PopupBase } from "../Manager/PopupBase";
 import PopupManager from "../Manager/PopupManager";
 import ScoreManager from "../Manager/ScoreManager";
-import SegmentManager from "../Manager/SegmentManager";
+import { PopupBase } from "./Base/PopupBase";
 import MainPopup from "./MainPopup";
 
 const {ccclass, property} = cc._decorator;
@@ -43,7 +41,7 @@ export default class ResultPopup extends PopupBase {
         super.onShow(params);
         this.updateLabelBasedOnState();
         this.coinsCollectedLabel.string = ScoreManager.getInstance().getScore()+" COINS";
-        this.damagePercentageLabel.string = "DAMAGE "+GameManager.getInstance().boat.getComponent(DamageController).getTotalDamage().toString() +"%";
+        this.damagePercentageLabel.string = "DAMAGE "+GameManager.Instance().boat.getComponent(DamageController).getTotalDamage().toString() +"%";
     }
 
     protected setupPopup(params?: any[]): void {
@@ -76,8 +74,8 @@ export default class ResultPopup extends PopupBase {
 
     private onContinueButtonClicked(): void {
        
-        PopupManager.getInstance().showPopup(MainPopup);
-        AudioManager.getInstance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
+        PopupManager.Instance().showPopup(MainPopup);
+        AudioManager.Instance().playSfx(SoundClipType.BUTTON_CLICK_SFX);
         this.onHide();
     }
 

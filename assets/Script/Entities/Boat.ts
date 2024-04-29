@@ -3,6 +3,7 @@ import { ObstacleCollider, ObstacleColliderType } from "../Collectables/Obstacle
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import BoatInputController from "../Controller/BoatInputController";
 import DamageController from "../Controller/DamageController";
+import PlayerData from "../Data/PlayerData";
 import PopupManager from "../Manager/PopupManager";
 import ResultPopup, { ResultState } from "../UI/ResultPopup";
 const { ccclass, property } = cc._decorator;
@@ -25,20 +26,14 @@ export default class Boat extends cc.Component {
         physics_manager.enabled = true;
         physics_manager.gravity = cc.v2 (0, 0);
 
-        console.log("initial Rotation : "+this.node.rotation);
-
         // Register collision event listener
-        cc.director.getCollisionManager().enabled = true; // Enable collision detection
-        //cc.director.getCollisionManager().enabledDebugDraw = true; // Enable debug draw to visualize collisions
+        cc.director.getCollisionManager().enabled = true;
+        //cc.director.getCollisionManager().enabledDebugDraw = true;
 
-        // Listen for collision events
         cc.director.getCollisionManager().on('collision-enter', this.onCollisionEnter, this);
-        cc.director.getCollisionManager().on('collision-exit', this.onCollisionExit, this);
     }
 
     protected update(dt: number) {
-        // Assuming 'currentVelocity' is updated elsewhere in your code
-        // Check if velocity is approximately zero
         if (this.inputController.isIdle) {
             // Velocity is near zero, enable the idle ripple effect
             if (!this.idleRippleEffect.active) {
@@ -62,7 +57,8 @@ export default class Boat extends cc.Component {
             if(obstacleCollider) {
                 switch(obstacleCollider.GetObstacleColliderType()) {
                     case ObstacleColliderType.FinsihLine:
-                        PopupManager.getInstance().showPopup(ResultPopup, [ResultState.FirstSafariDone]);
+                        PlayerData.firstTimeDone();
+                        PopupManager.Instance().showPopup(ResultPopup, [ResultState.FirstSafariDone]);
                         GameEvents.dispatchEvent(GameEventNames.GameEnd);
                         break;
                     case ObstacleColliderType.Island:
@@ -73,14 +69,9 @@ export default class Boat extends cc.Component {
         }
     }
 
-    protected onCollisionExit(event: cc.Event.EventCustom) {
-        
-    }
-
     protected onDestroy() {
         // Unregister collision event listener
         cc.director.getCollisionManager().off('collision-enter', this.onCollisionEnter, this);
-        cc.director.getCollisionManager().off('collision-exit', this.onCollisionExit, this);
     }
 
     private onWakeEffect() : void{

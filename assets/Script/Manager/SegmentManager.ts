@@ -62,7 +62,7 @@ export default class SegmentManager extends cc.Component {
     private loadSegmentData() {
 
         var jsonPath = "";
-        if(!PlayerData.isFirstTime()){
+        if(PlayerData.isFirstTime()){
             jsonPath = "Data/FirstTimeSegmentData";
         }else{
             jsonPath = "Data/SegmentData";

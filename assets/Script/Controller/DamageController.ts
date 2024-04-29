@@ -23,7 +23,6 @@ export default class DamageController extends cc.Component {
         return this._totalDamage;
     }
 
-    // Call this method when the boat collides with a damage-causing obstacle
     public applyDamage() {
         const currentTime = Date.now();
         if (currentTime - this._lastDamageTime > this.damageInterval * 1000) {
@@ -32,14 +31,18 @@ export default class DamageController extends cc.Component {
         }
     }
 
+    public resetDamage() {
+        this._totalDamage = 0;
+    }
+
     private handleDamage() {
         this._totalDamage += GameConst.DAMAGE_PER_COLLIDE;
-        HUDManager.getInstance().setDamage(this._totalDamage);
-        AudioManager.getInstance().playSfx(SoundClipType.COLLISION_SFX);
+        HUDManager.Instance().setDamage(this._totalDamage);
+        AudioManager.Instance().playSfx(SoundClipType.COLLISION_SFX);
 
         if(this._totalDamage > 100)
         {
-            PopupManager.getInstance().showPopup(ResultPopup, [ResultState.FullDamage])
+            PopupManager.Instance().showPopup(ResultPopup, [ResultState.FullDamage])
             GameEvents.dispatchEvent(GameEventNames.GameEnd);
         }
     }

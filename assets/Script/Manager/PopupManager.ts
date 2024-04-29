@@ -1,37 +1,25 @@
-import { PopupBase } from "./PopupBase";
+import { GenericSingleton } from "../Common/GenericSingleton";
+import { PopupBase } from "../UI/Base/PopupBase";
 
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class PopupManager extends cc.Component {
+export default class PopupManager extends GenericSingleton<PopupManager> {
 
     @property([PopupBase])
     popupPrefabs: PopupBase[] = [];
 
     private _popups: Map<string, PopupBase> = new Map();
-    private static _instance: PopupManager;
-
-    public static getInstance(): PopupManager {
-        if (!PopupManager._instance) {
-            PopupManager._instance = new PopupManager();
-        }
-        return PopupManager._instance;
-    }
 
     protected onLoad() {
-        if (PopupManager._instance) {
-            this.node.destroy();
-        } else {
-            PopupManager._instance = this;
-            cc.game.addPersistRootNode(this.node); // Make this node persistent
-            this.registerAllPopups();
-        }
+        super.onLoad();
+        this.registerAllPopups();
     }
 
     private registerAllPopups() {
         this.popupPrefabs.forEach(prefab => {
             this._popups.set(prefab.name, prefab);
-            prefab.node.active = false; // Initially deactivate
+            prefab.node.active = false;
         });
     }
 

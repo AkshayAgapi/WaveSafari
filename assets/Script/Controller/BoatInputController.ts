@@ -3,10 +3,10 @@ import { GameConst } from "../Common/GameConstant";
 import GameEvents, { GameEventNames } from "../Common/GameEvents";
 import { BoatUpgrade } from "../Data/BoatUpgradeData";
 import PlayerData from "../Data/PlayerData";
-import FuelController from "../Manager/FuelController";
 import HUDManager from "../Manager/HudManager";
 import PopupManager from "../Manager/PopupManager";
 import ResultPopup, { ResultState } from "../UI/ResultPopup";
+import FuelController from "./FuelController";
 
 const { ccclass, property } = cc._decorator;
 
@@ -16,21 +16,18 @@ export default class BoatInputController extends cc.Component {
     @property(Joystick)
     joystick: Joystick = null;
 
+    public isIdle: boolean = false; 
+
     private _movementSpeed: number = 0; // Units per second
     private _rotationSpeed: number = 200; // Degrees per second, adjusted for smoother transition
     public _currentVelocity: cc.Vec3 = cc.Vec3.ZERO; // Tracking current velocity for inertia
     private _targetRotation: number = 90;
     private _decelerationFactor: number = 0.993; // Factor to decrease velocity each frame when joystick is released
     private _idleTime: number = 0; // Time since last joystick input
-
-    public isIdle: boolean = false; // Is the boat idle?
-
     private _rippleMagnitude: number = 0.05; // Magnitude of the ripple effect
     private _rippleFrequency: number = 1; // Frequency of the ripple effect
-
     private _fuelController: FuelController = null;
     private _currentBoatSetting: BoatUpgrade;
-
     private _autoMoveDuration: number = 5; // Duration for automatic movement
     private _autoMoveTimer: number = 0; // Timer to track the automatic movement
     private _isAutoMoving: boolean = false; // Flag to control automatic movement
@@ -40,10 +37,8 @@ export default class BoatInputController extends cc.Component {
     private readonly _currentVelocityVariation : number = 10;
 
     protected onLoad(): void {
-        GameEvents.on(GameEventNames.FuelLow, this.HandleOnFuelLow);
-        GameEvents.on(GameEventNames.FuelDepleted, this.HandleOnFuelDepleted);
-        GameEvents.on(GameEventNames.FuelRefueled, this.HandleOnFuelRefuled);
-        GameEvents.on(GameEventNames.GameCinematicTutorialStart, this.HandleOnCinematicTutorialStart);
+        GameEvents.on(GameEventNames.FuelDepleted, this.handleOnFuelDepleted);
+        GameEvents.on(GameEventNames.GameCinematicTutorialStart, this.handleOnCinematicTutorialStart);
     }
 
     protected start(): void {
@@ -53,12 +48,9 @@ export default class BoatInputController extends cc.Component {
     }
 
     protected onDestroy(): void {
-        GameEvents.off(GameEventNames.FuelLow, this.HandleOnFuelLow);
-        GameEvents.off(GameEventNames.FuelDepleted, this.HandleOnFuelDepleted);
-        GameEvents.off(GameEventNames.FuelRefueled, this.HandleOnFuelRefuled);
-        GameEvents.off(GameEventNames.GameCinematicTutorialStart, this.HandleOnCinematicTutorialStart);
+        GameEvents.off(GameEventNames.FuelDepleted, this.handleOnFuelDepleted);
+        GameEvents.off(GameEventNames.GameCinematicTutorialStart, this.handleOnCinematicTutorialStart);
     }
-
 
     public disableControl() {
         this.enabled = false; 
@@ -86,7 +78,7 @@ export default class BoatInputController extends cc.Component {
 
         if (!this._fuelController.isEngineRunning && this._waitForStop) {
             if (this._currentVelocity.fuzzyEquals(cc.Vec3.ZERO, this._currentVelocityVariation)) {
-                PopupManager.getInstance().showPopup(ResultPopup, [ResultState.FuelEmpty]);
+                PopupManager.Instance().showPopup(ResultPopup, [ResultState.FuelEmpty]);
                 GameEvents.dispatchEvent(GameEventNames.GameEnd);
                 this._waitForStop = false; 
             }
@@ -118,7 +110,7 @@ export default class BoatInputController extends cc.Component {
 
     private handleJoystickInput(dt: number): void {
         if (this.joystick && this.joystick.Joystick_Vector.mag() > 0 && this._fuelController.isEngineRunning) {
-            HUDManager.getInstance().setVisibilityFingerTutorial(false);
+            HUDManager.Instance().setVisibilityFingerTutorial(false);
             let joystickIntensity = this.joystick.Joystick_Vector.mag() / this.joystick.Joystick_Max;
             this._currentVelocity = this.joystick.Joystick_Vector.normalize().mul(this._movementSpeed);
             this._fuelController.consumeFuel(dt, joystickIntensity);
@@ -127,19 +119,13 @@ export default class BoatInputController extends cc.Component {
         }
     }
 
-    private HandleOnCinematicTutorialStart = () => {
+    private handleOnCinematicTutorialStart = () => {
         this._isAutoMoving = true;
     };
 
-    private HandleOnFuelLow = () => {
-    };
-
-    private HandleOnFuelDepleted = () => {
+    private handleOnFuelDepleted = () => {
         this._fuelController.stopEngine();
         this._waitForStop = true; 
-    };
-
-    private HandleOnFuelRefuled = () => {
     };
 
     private applyIdleRippleEffect(dt: number): void {
@@ -170,15 +156,12 @@ export default class BoatInputController extends cc.Component {
         const angleDifference = this.normalizeAngle(targetAngle - currentAngle);
         const rotationDirection = angleDifference > 0 ? 1 : -1;
     
-        // Calculate rotation amount based on rotation speed and deltaTime
         let rotationAmount = this._rotationSpeed * dt;
         
-        // If the absolute difference is less than what we would rotate this frame, clamp it
         if (Math.abs(angleDifference) < rotationAmount) {
             rotationAmount = Math.abs(angleDifference);
         }
     
-        // Apply rotation
         this.node.angle += rotationAmount * rotationDirection;
     }
     

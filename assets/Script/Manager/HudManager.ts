@@ -1,3 +1,4 @@
+import { GenericSingleton } from "../Common/GenericSingleton";
 import CommonPopup from "../UI/CommonPopup";
 import AudioManager from "./AudioManager";
 import GameManager from "./GameManager";
@@ -6,7 +7,7 @@ import PopupManager from "./PopupManager";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class HUDManager extends cc.Component{
+export default class HUDManager extends GenericSingleton<HUDManager>{
     @property(cc.Sprite)
     damageIndicator: cc.Sprite = null;
 
@@ -46,27 +47,8 @@ export default class HUDManager extends cc.Component{
     @property(cc.SpriteFrame)
     muteIcon: cc.SpriteFrame = null;
 
-    private static _instance: HUDManager;
-
-    public static getInstance(): HUDManager {
-        if (!HUDManager._instance) {
-            return HUDManager._instance;
-            
-        }
-        return HUDManager._instance;
-    }
-
-    // Initialize HUD values
     onLoad() {
-
-        if (HUDManager._instance) {
-            this.node.destroy();
-        } else {
-            HUDManager._instance = this;
-            //cc.game.addPersistRootNode(this.node); 
-        }
-
-
+        super.onLoad();
         this.soundToggleButton.node.on('click', this.onSoundToggleButtonClicked, this);
         this.pauseButton.node.on('click', this.onPauseButtonClicked, this);
         this.setDamage(0);
@@ -75,24 +57,28 @@ export default class HUDManager extends cc.Component{
     }
 
     protected onDestroy() {
-        this.soundToggleButton.node.off('click', this.onSoundToggleButtonClicked, this);
-        this.pauseButton.node.off('click', this.onPauseButtonClicked, this);
+        if(this.soundToggleButton != null && this.soundToggleButton.node != null){
+            this.soundToggleButton.node.off('click', this.onSoundToggleButtonClicked, this);
+        }
+        if(this.pauseButton != null && this.pauseButton.node != null){
+            this.pauseButton.node.off('click', this.onPauseButtonClicked, this);
+        }
     }
 
     private onSoundToggleButtonClicked(): void {
-        var isMuted = AudioManager.getInstance().toggleAudio();
+        var isMuted = AudioManager.Instance().toggleAudio();
         this.soundImage.spriteFrame = isMuted? this.muteIcon : this.soundIcon;
     }
 
     private onPauseButtonClicked(): void {
-        PopupManager.getInstance().showPopup(CommonPopup,["Game Paused!", "Resume",this.onPopupActionCallback ]);
+        PopupManager.Instance().showPopup(CommonPopup,["Game Paused!", "Resume",this.onPopupActionCallback ]);
         this.scheduleOnce(() => {
-            GameManager.getInstance().pauseGame();
-        }, 0.4);
+            GameManager.Instance().pauseGame();
+        }, 0.35);
     }
 
     private onPopupActionCallback(){
-        GameManager.getInstance().resumeGame();
+        GameManager.Instance().resumeGame();
     }
 
     // Update damage level on the damage indicator sprite
