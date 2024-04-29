@@ -15,7 +15,9 @@
     "subContext": ""
   },
   "encryptJs": true,
-  "excludeScenes": [],
+  "excludeScenes": [
+    "d1916dbe-725d-4ba7-803c-1bbd1bccf242"
+  ],
   "fb-instant-games": {},
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
@@ -26,17 +28,17 @@
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
-    "portrait": false,
-    "upsideDown": false
+    "portrait": true,
+    "upsideDown": true
   },
-  "packageName": "org.cocos2d.WordWaveSafari",
+  "packageName": "com.toothless.wavesafari",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait",
     "zip": false
   },
   "startScene": "5cccc4e4-fcbd-4003-bb2c-0d71598c9b98",
-  "title": "WordWaveSafari",
+  "title": "WaveSafari",
   "webOrientation": "auto",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
@@ -45,6 +47,6 @@
     "separate_engine": false,
     "subContext": ""
   },
-  "xxteaKey": "4e3b755e-5e5d-4f",
+  "xxteaKey": "7783046e-68b6-69",
   "zipCompressJs": true
 }
